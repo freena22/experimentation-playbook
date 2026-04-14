@@ -1,5 +1,7 @@
 # 6 A/B Tests, 2 Ships: An Experimentation Program Review
 
+[![CI — Smoke Test](https://github.com/freena22/experimentation-playbook/actions/workflows/ci.yml/badge.svg)](https://github.com/freena22/experimentation-playbook/actions/workflows/ci.yml)
+
 > *How I would run, read, and learn from a quarter of experiments at a consumer SaaS company.*
 
 **Live Dashboard:** [View on GitHub Pages →](https://freena22.github.io/experimentation-playbook/)
@@ -119,7 +121,7 @@ Every experiment has a one-page brief answering three questions a VP actually ca
 
 **2. Experiment Gallery** — Per-experiment deep dive: hypothesis, design, raw results, deeper analysis, decision, and learnings — structured identically for each so patterns across tests become visible.
 
-**3. Cookie Cats Deep Dive** — A standalone analysis of the classic Cookie Cats mobile game gate experiment (~90K users, reproduced from public benchmark). Shows hands-on analytical depth on real data: retention curves, statistical testing, bootstrap confidence intervals, Bayesian posterior analysis, and segment-level uplift.
+**3. Cookie Cats Deep Dive** — A standalone analysis of the classic Cookie Cats mobile game gate experiment using the **real public dataset** (~90K players, [Kaggle CC0](https://www.kaggle.com/datasets/mursideyarkin/mobile-games-ab-testing-cookie-cats)). Shows hands-on analytical depth on real data: retention curves, statistical testing, bootstrap confidence intervals, Bayesian posterior analysis, and segment-level uplift.
 
 **4. Experiment Designer** — Interactive tool for sizing a new test: sample size, MDE, duration estimator, and — critically — a "business case" layer that translates statistical parameters into expected business value. *Most calculators tell you how many users you need. This one also tells you whether the test is worth running.*
 
@@ -165,7 +167,7 @@ The technical stack is **intentionally appropriate, not intentionally complex**.
 ```
 experimentation-playbook/
 ├── model/
-│   ├── generate_experiment_data.py   # Simulates 6 experiments + reproduces Cookie Cats
+│   ├── generate_experiment_data.py   # Simulates 6 LinguaLeap experiments (Cookie Cats is real data)
 │   ├── analyze_experiments.py        # Runs the full analysis suite
 │   └── cookie_cats_analysis.py       # Dedicated deep-dive on the real-data case
 ├── dashboard/
@@ -208,12 +210,14 @@ python model/cookie_cats_charts.py
 
 The React dashboard is a single `.jsx` file that can be rendered in any React environment. Dependencies: `react`, `recharts`.
 
+> **Note on dashboard data:** The dashboard figures are static snapshots derived from `data/results/*.json`. This is a deliberate design choice for GitHub Pages (no backend). If you re-run the analysis scripts with a different seed or dataset, update the embedded constants in `experimentation_dashboard.jsx` to match.
+
 ---
 
 ## Caveats & Honest Limitations
 
 - **The 6 experiments are simulated**, with ground-truth effects set during data generation. This is for methodology demonstration — in production, you don't know the ground truth, which makes experimentation much harder and judgment much more valuable.
-- **Cookie Cats data is reproduced** from the public benchmark dataset using its published distributional characteristics (sample size, retention rates, gamerounds distribution). It's being used as a "deep dive on real messy data" case study, not as proof of broader analytical scale.
+- **Cookie Cats uses the real public dataset** (90,189 players, [Kaggle CC0](https://www.kaggle.com/datasets/mursideyarkin/mobile-games-ab-testing-cookie-cats)) — this is genuine data with real distributional quirks, not a simulation. The other 6 LinguaLeap experiments are simulated with deliberate ground-truth effects for methodology demonstration.
 - **Segment definitions are predefined** in the simulation. In reality, finding the right segments is half the battle, and doing it post-hoc raises multiple-testing concerns. The segments here are chosen for clarity of teaching, not optimized via search.
 - **No causal inference beyond experimentation** — quasi-experimental methods (DiD, synthetic control, RDD) for cases where experimentation isn't feasible are important in practice but out of scope here.
 - **This is one quarter's worth of experiments.** Real program maturity takes years of accumulated learnings. What's shown here is what quarter 4 or 5 of an experimentation program might look like, not year 1.

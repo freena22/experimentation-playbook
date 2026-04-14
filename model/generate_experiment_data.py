@@ -342,78 +342,15 @@ print(f"  Control vs Holdout (should be ~0): {(c_mean/h_mean-1)*100:+.2f}%")
 
 
 # =============================================================================
-# Cookie Cats Reproduction — based on public distribution specs
+# Cookie Cats — REAL PUBLIC DATASET (not simulated)
+# Source: https://www.kaggle.com/datasets/mursideyarkin/mobile-games-ab-testing-cookie-cats
+# The CSV ships with the repo at data/experiments/cookie_cats.csv
 # =============================================================================
 print("\n" + "=" * 70)
-print("Cookie Cats (reproduced from public dataset specs)")
+print("Cookie Cats (real public dataset, 90,189 players)")
 print("=" * 70)
 
-# Based on the actual Cookie Cats dataset characteristics:
-# - 90,189 users
-# - ~50/50 split between gate_30 and gate_40
-# - 1-day retention: gate_30 ~44.8%, gate_40 ~44.2% (gate_30 slightly higher)
-# - 7-day retention: gate_30 ~19.0%, gate_40 ~18.2% (gate_30 meaningfully higher)
-# - sum_gamerounds: heavily right-skewed, log-normal-ish
-
-n_cc = 90189
-np.random.seed(42)
-
-variant_cc = np.random.choice(['gate_30', 'gate_40'], n_cc, p=[0.5024, 0.4976])  # actual split
-userid = np.arange(116, 116 + n_cc)
-
-# Game rounds - heavily right-skewed, some with massive values
-# Using mixture: most users play little, some play a lot
-is_heavy = np.random.random(n_cc) < 0.12
-gamerounds = np.where(
-    is_heavy,
-    np.random.negative_binomial(2, 0.01, n_cc),  # heavy players
-    np.random.negative_binomial(2, 0.08, n_cc)   # light players
-)
-gamerounds = np.clip(gamerounds, 0, 50000)
-
-# 1-day retention: slightly lower in gate_40 (but not significantly)
-p_ret1_gate30 = 0.4482
-p_ret1_gate40 = 0.4423
-
-# 7-day retention: meaningfully lower in gate_40
-p_ret7_gate30 = 0.1902
-p_ret7_gate40 = 0.1820
-
-ret_1 = np.zeros(n_cc, dtype=bool)
-ret_7 = np.zeros(n_cc, dtype=bool)
-
-mask_30 = variant_cc == 'gate_30'
-mask_40 = variant_cc == 'gate_40'
-
-# Retention correlated with gamerounds (real-world effect: more play → more retention)
-# Adjusted offsets so that marginal retention matches Cookie Cats' published values
-# gate_30: ret_1 ≈ 44.8%, ret_7 ≈ 19.0%
-# gate_40: ret_1 ≈ 44.2%, ret_7 ≈ 18.2%
-round_effect = np.tanh(gamerounds / 50)  # 0 to 1 sigmoid-like
-
-ret_1[mask_30] = np.random.random(mask_30.sum()) < (p_ret1_gate30 + 0.15 * round_effect[mask_30] - 0.06)
-ret_1[mask_40] = np.random.random(mask_40.sum()) < (p_ret1_gate40 + 0.15 * round_effect[mask_40] - 0.06)
-
-# For ret_7, we need higher base rates because of the "ret_7 requires ret_1" constraint
-# If we want final ret_7 ≈ 19%, and ret_7 only happens for ret_1 users (~45%),
-# then among ret_1 users we need ~42% to also be ret_7
-ret_7_raw_30 = np.random.random(mask_30.sum()) < (0.42 + 0.15 * round_effect[mask_30])
-ret_7_raw_40 = np.random.random(mask_40.sum()) < (0.405 + 0.15 * round_effect[mask_40])
-
-ret_7[mask_30] = ret_7_raw_30
-ret_7[mask_40] = ret_7_raw_40
-
-# 7-day retention requires 1-day retention (logical constraint)
-ret_7 = ret_7 & ret_1
-
-cookie_cats = pd.DataFrame({
-    'userid': userid,
-    'version': variant_cc,
-    'sum_gamerounds': gamerounds,
-    'retention_1': ret_1,
-    'retention_7': ret_7,
-})
-cookie_cats.to_csv(EXPERIMENTS_DIR / 'cookie_cats.csv', index=False)
+cookie_cats = pd.read_csv(EXPERIMENTS_DIR / 'cookie_cats.csv')
 print(f"  Users: {len(cookie_cats):,}")
 print(f"  Split:")
 print(f"    gate_30: {(cookie_cats['version']=='gate_30').sum():,}")

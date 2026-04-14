@@ -7,6 +7,12 @@ const {
 } = Recharts;
 
 // ============================================================================
+// NOTE: Dashboard figures are static snapshots from data/results/*.json.
+// The 6 LinguaLeap experiments use simulated data; Cookie Cats uses the real
+// public dataset (90,189 players).  Re-run model/*.py to regenerate results.
+// ============================================================================
+
+// ============================================================================
 // COLORS & STYLE
 // ============================================================================
 const COLORS = {
@@ -171,22 +177,24 @@ const EXPERIMENTS = [
   },
 ];
 
+// Cookie Cats data from real public dataset (90,189 players)
+// Source: https://www.kaggle.com/datasets/mursideyarkin/mobile-games-ab-testing-cookie-cats
 const COOKIE_CATS = {
   name: "Cookie Cats: Gate Placement",
-  source: "Reproduced from public Cookie Cats benchmark (~90K mobile players)",
+  source: "Real public dataset — 90,189 mobile game players (Kaggle, CC0 license)",
   decision: "KEEP GATE AT LEVEL 30",
   background: "Cookie Cats is a popular puzzle game. The original gate was at level 30. Hypothesis: moving it to level 40 would improve retention by delaying friction.",
-  sampleSizes: { gate_30: 45245, gate_40: 44944, total: 90189 },
-  srm: { passed: true, pValue: 0.316 },
-  retention1: { gate30: 45.80, gate40: 45.53, diff: -0.27, pValue: 0.424, significant: false, ci: [-0.92, 0.39] },
-  retention7: { gate30: 22.65, gate40: 21.82, diff: -0.83, pValue: 0.003, significant: true, ci: [-1.37, -0.29] },
-  bayesian: { d1ProbGate30Better: 0.788, d7ProbGate30Better: 0.999, probGate40LosesByOnePP: 0.268 },
+  sampleSizes: { gate_30: 44700, gate_40: 45489, total: 90189 },
+  srm: { passed: true, pValue: 0.0551 },
+  retention1: { gate30: 44.82, gate40: 44.23, diff: -0.59, pValue: 0.074, significant: false, ci: [-1.24, 0.06] },
+  retention7: { gate30: 19.02, gate40: 18.20, diff: -0.82, pValue: 0.002, significant: true, ci: [-1.33, -0.31] },
+  bayesian: { d1ProbGate30Better: 0.962, d7ProbGate30Better: 0.999, probGate40LosesByOnePP: 0.243 },
   segmentation: [
-    { tier: "No play", n: 526, gate30: 18.18, gate40: 17.95, diff: -0.23 },
-    { tier: "Tried (1-5)", n: 7674, gate30: 17.39, gate40: 16.69, diff: -0.70 },
-    { tier: "Light (6-30)", n: 50777, gate30: 20.80, gate40: 20.01, diff: -0.78 },
-    { tier: "Engaged (31-100)", n: 23265, gate30: 26.07, gate40: 24.80, diff: -1.27 },
-    { tier: "Heavy (100+)", n: 7947, gate30: 30.15, gate40: 29.62, diff: -0.53 },
+    { tier: "No play", n: 3994, gate30: 0.83, gate40: 0.63, diff: -0.19 },
+    { tier: "Tried (1-5)", n: 20723, gate30: 1.29, gate40: 1.44, diff: 0.15 },
+    { tier: "Light (6-30)", n: 32845, gate30: 6.69, gate40: 6.13, diff: -0.56 },
+    { tier: "Engaged (31-100)", n: 20242, gate30: 28.40, gate40: 26.23, diff: -2.18 },
+    { tier: "Heavy (100+)", n: 12385, gate30: 71.39, gate40: 71.24, diff: -0.15 },
   ],
   insight: "Friction in the right place isn't bad. The forced wait at level 30 likely creates a habit-forming pause. Moving it to level 40 means more players hit the gate after they've already lost interest.",
 };

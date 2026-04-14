@@ -33,7 +33,7 @@ The six experiments are simulated with deliberate ground-truth effects. Each was
 | E5 | Real +2% effect with sample size sized for 8% MDE (deliberately underpowered) |
 | E6 | +22% lift with CUPED-eligible pre-period covariate |
 
-Cookie Cats data is reproduced from the published dataset characteristics (n=90,189; retention_1 ≈ 44.8/44.2%; retention_7 ≈ 19.0/18.2%; right-skewed gamerounds with max ~1,000+).
+Cookie Cats uses the **real public dataset** (n=90,189; [Kaggle CC0](https://www.kaggle.com/datasets/mursideyarkin/mobile-games-ab-testing-cookie-cats)), not a simulation. This is genuine player data with real distributional quirks (heavily right-skewed gamerounds, max ~49,854).
 
 **Why simulation works for methodology demonstration but has limits:**
 - ✓ Lets us show that analysis recovers known effects

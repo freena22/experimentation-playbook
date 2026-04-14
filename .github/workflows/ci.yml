@@ -1,0 +1,29 @@
+name: CI — Smoke Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate experiment data (E1–E6)
+        run: python model/generate_experiment_data.py
+
+      - name: Run full analysis suite
+        run: python model/analyze_experiments.py
+
+      - name: Run Cookie Cats deep dive (real data)
+        run: python model/cookie_cats_analysis.py
