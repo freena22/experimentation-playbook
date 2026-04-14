@@ -19,9 +19,21 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="6 A/B Tests, 2 Ships: An Experimentation Program Review" />
   <meta name="twitter:description" content="How I would run, read, and learn from a quarter of experiments at a consumer SaaS company." />
+
+  <!-- Fonts & Tailwind (required by dashboard JSX) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #F9FAFB; }
+    @media (max-width: 768px) {
+      .recharts-responsive-container { min-height: 200px; }
+    }
+  </style>
 </head>
 <body>
   <div id="root"></div>
+
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script>
@@ -37,6 +49,7 @@
   </script>
   <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
   <script type="text/babel" src="experimentation_dashboard.jsx"></script>
 </body>
 </html>
