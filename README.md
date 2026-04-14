@@ -2,7 +2,7 @@
 
 > *How I would run, read, and learn from a quarter of experiments at a consumer SaaS company.*
 
-**Live Dashboard:** [View on GitHub Pages →](#)
+**Live Dashboard:** [View on GitHub Pages →](https://freena22.github.io/experimentation-playbook/)
 
 ---
 
@@ -174,7 +174,7 @@ experimentation-playbook/
 │   ├── experiments/                  # Generated CSVs (one per experiment)
 │   └── results/                      # Analysis output JSONs
 ├── charts/                           # Static PNG charts (one per experiment + Cookie Cats)
-├── docs/                             # Optional: GitHub Pages assets (e.g. index.html)
+├── docs/                             # GitHub Pages: index.html + experimentation_dashboard.jsx (CDN React/Recharts + Babel)
 ├── methodology.md                    # Technical methodology deep-dive
 ├── requirements.txt
 └── README.md
