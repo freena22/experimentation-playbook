@@ -1,0 +1,79 @@
+{
+  "experiment_id": "E6",
+  "name": "Leaderboard Gamification",
+  "area": "Engagement",
+  "hypothesis": "Adding a friends leaderboard will increase daily engagement through social motivation",
+  "primary_metric": "active_days_in_30d",
+  "dates": "2025-08-10 to 2025-09-10",
+  "sample_sizes": {
+    "control": 26021,
+    "treatment": 26225,
+    "holdout": 5754,
+    "total": 58000,
+    "design": "45% control / 45% treatment / 10% holdout"
+  },
+  "srm_check": {
+    "chi2": 0.797,
+    "p_value": 0.3721,
+    "passed": true
+  },
+  "standard_analysis": {
+    "control_mean": 11.9896,
+    "treatment_mean": 14.6027,
+    "control_std": 5.0931,
+    "treatment_std": 5.1461,
+    "absolute_diff": 2.613,
+    "relative_lift_pct": 21.79,
+    "t_stat": 58.332,
+    "p_value": 0.0,
+    "ci_95_abs": [
+      2.5252,
+      2.7008
+    ],
+    "significant_at_05": true
+  },
+  "cuped_analysis": {
+    "result": {
+      "control_mean": 12.0013,
+      "treatment_mean": 14.5911,
+      "control_std": 4.4608,
+      "treatment_std": 4.494,
+      "absolute_diff": 2.5898,
+      "relative_lift_pct": 21.58,
+      "t_stat": 66.104,
+      "p_value": 0.0,
+      "ci_95_abs": [
+        2.513,
+        2.6666
+      ],
+      "significant_at_05": true
+    },
+    "theta_coefficient": 0.4512,
+    "variance_reduction_pct": 23.29,
+    "interpretation": "CUPED reduced variance by 23%, equivalent to running the test with 33,920 users per variant without CUPED. Same point estimate, tighter confidence intervals."
+  },
+  "bayesian_analysis": {
+    "prob_treatment_better": 1.0,
+    "expected_lift_pct": 21.8,
+    "lift_ci_90_pct": [
+      21.12,
+      22.48
+    ],
+    "prob_lift_exceeds_10pct": 1.0,
+    "prob_lift_exceeds_20pct": 1.0
+  },
+  "holdout_validation": {
+    "control_vs_holdout_lift_pct": -0.39,
+    "control_vs_holdout_p_value": 0.52245,
+    "interpretation": "PASSED: Control and holdout show no meaningful difference, confirming our control group is representative and the treatment effect is genuine."
+  },
+  "business_impact": {
+    "monthly_dau_impacted": 900000,
+    "revenue_per_dau_day": 0.15,
+    "projected_annual_revenue_lift": 10737022,
+    "confidence_level": "High \u2014 confirmed by holdout, CUPED, and Bayesian inference"
+  },
+  "decision": "SHIP",
+  "teaching_moment": "Textbook example of what a rigorous experiment looks like: large clean effect, validated with holdout group, variance-reduced via CUPED, and confirmed with Bayesian inference. This is the template for high-confidence ship decisions on major features.",
+  "one_liner": "+22% DAU, validated via holdout, variance-reduced via CUPED. Textbook ship."
+}

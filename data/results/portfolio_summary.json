@@ -1,0 +1,53 @@
+{
+  "portfolio_summary": {
+    "quarter": "Q3 2025",
+    "total_experiments": 6,
+    "breakdown": {
+      "ship": 2,
+      "ship_segmented": 1,
+      "kill": 2,
+      "rerun": 1
+    },
+    "ship_rate_pct": 50.0,
+    "effective_ship_rate_pct": 33.3,
+    "total_users_tested": 240000
+  },
+  "cross_experiment_learnings": [
+    {
+      "pattern": "Primary metric vs North Star misalignment",
+      "experiments_affected": [
+        "E4"
+      ],
+      "recommendation": "All activation tests must specify D7+D30 retention as guardrails"
+    },
+    {
+      "pattern": "Novelty effect masking steady-state performance",
+      "experiments_affected": [
+        "E3"
+      ],
+      "recommendation": "Behavior-change tests require minimum 3-week runtime"
+    },
+    {
+      "pattern": "Underpowered tests producing false null results",
+      "experiments_affected": [
+        "E5"
+      ],
+      "recommendation": "Default MDE for engagement features should be 3%, not 8%"
+    },
+    {
+      "pattern": "Average effects hiding opposing segment effects",
+      "experiments_affected": [
+        "E2"
+      ],
+      "recommendation": "Tenure-based segment analysis should be standard for all monetization tests"
+    }
+  ],
+  "methodology_rigor_applied": {
+    "srm_check_every_test": true,
+    "bayesian_inference_where_appropriate": true,
+    "cuped_variance_reduction_for_continuous_metrics": true,
+    "holdout_validation_for_major_features": true,
+    "segment_level_analysis_standard": true,
+    "business_impact_modeling": true
+  }
+}

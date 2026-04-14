@@ -1,0 +1,100 @@
+{
+  "experiment_id": "E2",
+  "name": "Extended Free Trial (7 \u2192 14 days)",
+  "area": "Monetization",
+  "hypothesis": "A longer trial gives users more time to experience product value, improving trial\u2192paid conversion",
+  "primary_metric": "trial_to_paid_conversion_rate",
+  "dates": "2025-07-15 to 2025-08-05",
+  "sample_sizes": {
+    "control": 19179,
+    "treatment": 18821,
+    "total": 38000
+  },
+  "srm_check": {
+    "chi2": 3.373,
+    "p_value": 0.0663,
+    "passed": true
+  },
+  "frequentist_overall": {
+    "control_rate": 0.15736,
+    "treatment_rate": 0.151,
+    "absolute_diff": -0.00636,
+    "relative_lift_pct": -4.04,
+    "z_stat": -1.716,
+    "p_value": 0.08619,
+    "ci_95_abs": [
+      -0.01362,
+      0.0009
+    ],
+    "significant_at_05": false
+  },
+  "bayesian_overall": {
+    "prob_treatment_better": 0.0429,
+    "expected_lift_pct": -4.01,
+    "lift_ci_90_pct": [
+      -7.75,
+      -0.17
+    ],
+    "expected_loss_if_ship_pct": 4.007
+  },
+  "segment_analysis": [
+    {
+      "segment": "new",
+      "n_control": 4795,
+      "n_treatment": 4626,
+      "control_rate": 0.07299,
+      "treatment_rate": 0.08971,
+      "lift_pct": 22.9,
+      "p_value": 0.00298,
+      "significant_at_05": true,
+      "prob_treatment_better": 0.9984,
+      "recommendation": "SHIP to this segment"
+    },
+    {
+      "segment": "returning",
+      "n_control": 6814,
+      "n_treatment": 6633,
+      "control_rate": 0.14749,
+      "treatment_rate": 0.13538,
+      "lift_pct": -8.21,
+      "p_value": 0.04404,
+      "significant_at_05": true,
+      "prob_treatment_better": 0.0227,
+      "recommendation": "DO NOT SHIP"
+    },
+    {
+      "segment": "tenured",
+      "n_control": 7570,
+      "n_treatment": 7562,
+      "control_rate": 0.21968,
+      "treatment_rate": 0.2022,
+      "lift_pct": -7.96,
+      "p_value": 0.00838,
+      "significant_at_05": true,
+      "prob_treatment_better": 0.0039,
+      "recommendation": "DO NOT SHIP"
+    }
+  ],
+  "simpsons_paradox": {
+    "overall_lift": -4.04,
+    "overall_p_value": 0.08619,
+    "by_segment": {
+      "new": 22.9,
+      "returning": -8.21,
+      "tenured": -7.96
+    },
+    "segment_mix": {
+      "new": 0.248,
+      "returning": 0.354,
+      "tenured": 0.398
+    }
+  },
+  "business_impact_if_segmented_ship": {
+    "target_segment": "new users only",
+    "projected_annual_incremental_conversions": 20064,
+    "rationale": "Shipping to new users captures the +22.9% lift without the -8% drag on tenured users"
+  },
+  "decision": "SHIP TO NEW USERS ONLY",
+  "teaching_moment": "Classic Simpson's paradox. Overall effect is ~flat and non-significant, but the experiment is definitively won for new users (+22.9%, p<0.01) and definitively lost for tenured users (-8%). Shipping universally would be a wash; shipping to the winning segment only is a clear strategic win.",
+  "one_liner": "Flat overall \u2014 but a clear win for new users and a loss for tenured users. Ship to new only."
+}

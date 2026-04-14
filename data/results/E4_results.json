@@ -1,0 +1,70 @@
+{
+  "experiment_id": "E4",
+  "name": "Shortened Onboarding (5 \u2192 3 steps)",
+  "area": "Activation",
+  "hypothesis": "Reducing onboarding friction will improve D1 activation without harming long-term retention",
+  "primary_metric": "d1_activation_rate",
+  "guardrail_metrics": [
+    "d7_retention_rate",
+    "d30_retention_rate"
+  ],
+  "dates": "2025-07-01 to 2025-07-14 (exposure), measured through 2025-08-13",
+  "sample_sizes": {
+    "control": 20635,
+    "treatment": 20365,
+    "total": 41000
+  },
+  "srm_check": {
+    "chi2": 1.778,
+    "p_value": 0.1824,
+    "passed": true
+  },
+  "funnel_analysis": {
+    "d1_activated": {
+      "metric_name": "D1 Activation (Primary)",
+      "control_rate": 0.45093,
+      "treatment_rate": 0.50577,
+      "lift_pct": 12.16,
+      "p_value": 0.0,
+      "significant_at_05": true,
+      "prob_treatment_better": 1.0
+    },
+    "d7_retained": {
+      "metric_name": "D7 Retention (Guardrail)",
+      "control_rate": 0.25423,
+      "treatment_rate": 0.2575,
+      "lift_pct": 1.29,
+      "p_value": 0.4477,
+      "significant_at_05": false,
+      "prob_treatment_better": 0.7777
+    },
+    "d30_retained": {
+      "metric_name": "D30 Retention (North Star)",
+      "control_rate": 0.11524,
+      "treatment_rate": 0.1043,
+      "lift_pct": -9.5,
+      "p_value": 0.00039,
+      "significant_at_05": true,
+      "prob_treatment_better": 0.0002
+    }
+  },
+  "north_star_conflict": {
+    "primary_metric_won": true,
+    "guardrail_lost": true,
+    "interpretation": "The primary metric (D1 activation) would have greenlit this experiment. But D30 retention \u2014 the metric that actually correlates with revenue \u2014 showed a significant decline. The shortened onboarding brought in more users who never formed the habit."
+  },
+  "business_impact_model": {
+    "assumed_annual_new_users": 1200000,
+    "assumed_d30_retained_user_ltv": 85,
+    "assumed_d1_only_user_ltv": 8,
+    "projected_lost_retained_users_annual": 13127,
+    "projected_lost_revenue_annual": 1115879,
+    "projected_marginal_revenue_from_extra_activations": 417896,
+    "net_annual_revenue_impact": -697983,
+    "verdict": "Net negative despite primary metric win"
+  },
+  "decision": "KILL",
+  "teaching_moment": "Primary metric wins can mask North Star losses. When activation metrics improve but retention metrics decline, the experiment is almost always pulling forward users who would have been better served by the longer flow. The correct response is to kill and redesign.",
+  "policy_implication": "Recommend: All activation/engagement tests must include D7 and D30 retention as pre-specified guardrail metrics. A primary-metric win with a guardrail loss defaults to \"do not ship\" unless there is an affirmative reason to override.",
+  "one_liner": "D1 activation +12% looked great. D30 retention -9.5% killed it."
+}

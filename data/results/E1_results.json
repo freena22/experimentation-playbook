@@ -1,0 +1,150 @@
+{
+  "experiment_id": "E1",
+  "name": "Social Login at Signup",
+  "area": "Acquisition",
+  "hypothesis": "Adding social login (Google/Apple) to signup will reduce friction and improve completion rate",
+  "primary_metric": "signup_completion_rate",
+  "dates": "2025-07-01 to 2025-07-14",
+  "sample_sizes": {
+    "control": 22500,
+    "treatment": 22500,
+    "total": 45000
+  },
+  "srm_check": {
+    "chi2": 0.0,
+    "p_value": 1.0,
+    "passed": true
+  },
+  "frequentist": {
+    "control_rate": 0.61613,
+    "treatment_rate": 0.67307,
+    "absolute_diff": 0.05693,
+    "relative_lift_pct": 9.24,
+    "z_stat": 12.617,
+    "p_value": 0.0,
+    "ci_95_abs": [
+      0.0481,
+      0.06576
+    ],
+    "significant_at_05": true
+  },
+  "bayesian": {
+    "prob_treatment_better": 1.0,
+    "expected_lift_pct": 9.25,
+    "lift_ci_90_pct": [
+      7.99,
+      10.52
+    ],
+    "expected_loss_if_ship_pct": 0
+  },
+  "segment_consistency": {
+    "Country Tier": [
+      {
+        "segment": "tier_3",
+        "n_control": 5751,
+        "n_treatment": 5605,
+        "lift_pct": 8.63,
+        "p_value": 0.0,
+        "ci_95_abs": [
+          0.03526,
+          0.07053
+        ]
+      },
+      {
+        "segment": "tier_2",
+        "n_control": 7737,
+        "n_treatment": 7918,
+        "lift_pct": 8.51,
+        "p_value": 0.0,
+        "ci_95_abs": [
+          0.03747,
+          0.06746
+        ]
+      },
+      {
+        "segment": "tier_1",
+        "n_control": 9012,
+        "n_treatment": 8977,
+        "lift_pct": 10.25,
+        "p_value": 0.0,
+        "ci_95_abs": [
+          0.04943,
+          0.07725
+        ]
+      }
+    ],
+    "Device": [
+      {
+        "segment": "ios",
+        "n_control": 10133,
+        "n_treatment": 10220,
+        "lift_pct": 9.66,
+        "p_value": 0.0,
+        "ci_95_abs": [
+          0.04651,
+          0.07273
+        ]
+      },
+      {
+        "segment": "android",
+        "n_control": 12367,
+        "n_treatment": 12280,
+        "lift_pct": 8.89,
+        "p_value": 0.0,
+        "ci_95_abs": [
+          0.04274,
+          0.06663
+        ]
+      }
+    ],
+    "Traffic Source": [
+      {
+        "segment": "organic",
+        "n_control": 7944,
+        "n_treatment": 7895,
+        "lift_pct": 9.38,
+        "p_value": 0.0,
+        "ci_95_abs": [
+          0.0432,
+          0.0729
+        ]
+      },
+      {
+        "segment": "paid_social",
+        "n_control": 6747,
+        "n_treatment": 6705,
+        "lift_pct": 8.15,
+        "p_value": 0.0,
+        "ci_95_abs": [
+          0.03443,
+          0.06671
+        ]
+      },
+      {
+        "segment": "referral",
+        "n_control": 3425,
+        "n_treatment": 3389,
+        "lift_pct": 10.37,
+        "p_value": 0.0,
+        "ci_95_abs": [
+          0.04113,
+          0.08642
+        ]
+      },
+      {
+        "segment": "paid_search",
+        "n_control": 4384,
+        "n_treatment": 4511,
+        "lift_pct": 9.86,
+        "p_value": 0.0,
+        "ci_95_abs": [
+          0.03969,
+          0.07965
+        ]
+      }
+    ]
+  },
+  "decision": "SHIP",
+  "teaching_moment": "Textbook clean experiment \u2014 consistent effect across all segments, passes SRM, strong statistical and practical significance",
+  "one_liner": "+9.24% signup completion, consistent across all segments"
+}

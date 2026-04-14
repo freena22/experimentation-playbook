@@ -1,0 +1,109 @@
+{
+  "experiment_name": "Cookie Cats: Gate placement (level 30 vs level 40)",
+  "data_source": "Reproduced from public Cookie Cats benchmark dataset",
+  "background": "Cookie Cats is a popular mobile puzzle game. As players progress, they encounter \"gates\" that force them to either wait or pay to continue. The original gate was at level 30. This experiment moved it to level 40, on the hypothesis that delaying the gate would improve retention.",
+  "sample_sizes": {
+    "gate_30": 45245,
+    "gate_40": 44944,
+    "total": 90189,
+    "split_pct": [
+      0.5017,
+      0.4983
+    ]
+  },
+  "data_quality": {
+    "missing_values": 0,
+    "logical_violations": 0,
+    "extreme_users_pct": 0.007,
+    "gamerounds_skewness": 4.44
+  },
+  "srm_check": {
+    "chi2": 1.0046,
+    "p_value": 0.3162,
+    "passed": true
+  },
+  "retention_1_day": {
+    "gate_30_rate": 0.458,
+    "gate_40_rate": 0.4553,
+    "absolute_diff_pp": -0.265,
+    "relative_lift_pct": -0.58,
+    "p_value": 0.4242,
+    "ci_95_pp": [
+      -0.915,
+      0.385
+    ],
+    "significant_at_05": false
+  },
+  "retention_7_day": {
+    "gate_30_rate": 0.2265,
+    "gate_40_rate": 0.2182,
+    "absolute_diff_pp": -0.829,
+    "relative_lift_pct": -3.66,
+    "p_value": 0.0027,
+    "ci_95_pp": [
+      -1.372,
+      -0.287
+    ],
+    "significant_at_05": true
+  },
+  "bayesian": {
+    "d1_prob_gate30_better": 0.7877,
+    "d7_prob_gate30_better": 0.9986,
+    "d7_prob_gate40_loses_at_least_1pp": 0.2683
+  },
+  "bootstrap": {
+    "d1_diff_ci_95_pp": [
+      -0.923,
+      0.384
+    ],
+    "d7_diff_ci_95_pp": [
+      -1.397,
+      -0.273
+    ]
+  },
+  "engagement_segmentation": {
+    "No play": {
+      "n_total": 526,
+      "n_gate_30": 253,
+      "n_gate_40": 273,
+      "ret7_gate_30": 0.1818,
+      "ret7_gate_40": 0.1795,
+      "abs_diff_pp": -0.233
+    },
+    "Tried (1-5)": {
+      "n_total": 7674,
+      "n_gate_30": 3852,
+      "n_gate_40": 3822,
+      "ret7_gate_30": 0.1739,
+      "ret7_gate_40": 0.1669,
+      "abs_diff_pp": -0.701
+    },
+    "Light (6-30)": {
+      "n_total": 50777,
+      "n_gate_30": 25660,
+      "n_gate_40": 25117,
+      "ret7_gate_30": 0.208,
+      "ret7_gate_40": 0.2001,
+      "abs_diff_pp": -0.785
+    },
+    "Engaged (31-100)": {
+      "n_total": 23265,
+      "n_gate_30": 11540,
+      "n_gate_40": 11725,
+      "ret7_gate_30": 0.2607,
+      "ret7_gate_40": 0.248,
+      "abs_diff_pp": -1.273
+    },
+    "Heavy (100+)": {
+      "n_total": 7947,
+      "n_gate_30": 3940,
+      "n_gate_40": 4007,
+      "ret7_gate_30": 0.3015,
+      "ret7_gate_40": 0.2962,
+      "abs_diff_pp": -0.529
+    }
+  },
+  "decision": "KEEP GATE AT LEVEL 30 (do not move to level 40)",
+  "business_interpretation": "Both 1-day and 7-day retention are higher when the gate is at level 30. The 7-day retention difference is small in absolute terms (~0.8pp) but meaningful in relative terms and statistically significant. Bayesian analysis shows >99% probability that gate_30 retains better at day 7. Moving the gate later would reduce long-term player engagement.",
+  "why_this_matters": "This is a textbook example of why 'less friction = better' is too simple a heuristic. The forced wait at level 30 likely creates a habit-forming pause that players return from. Moving it to level 40 means more players hit the gate after they've already lost interest, rather than during peak engagement when they're motivated to come back."
+}

@@ -1,0 +1,47 @@
+{
+  "experiment_id": "E5",
+  "name": "AI Conversation Practice Feature",
+  "area": "Engagement",
+  "hypothesis": "AI-powered conversation practice will increase user engagement (sessions over 14 days)",
+  "primary_metric": "sessions_per_user_14d",
+  "dates": "2025-08-01 to 2025-08-28",
+  "sample_sizes": {
+    "control": 3093,
+    "treatment": 2907,
+    "total": 6000
+  },
+  "srm_check": {
+    "chi2": 5.766,
+    "p_value": 0.0163,
+    "passed": true
+  },
+  "frequentist": {
+    "control_mean": 8.4846,
+    "treatment_mean": 8.7059,
+    "control_std": 5.6594,
+    "treatment_std": 5.7427,
+    "absolute_diff": 0.2212,
+    "relative_lift_pct": 2.61,
+    "t_stat": 1.502,
+    "p_value": 0.13318,
+    "ci_95_abs": [
+      -0.0675,
+      0.51
+    ],
+    "significant_at_05": false
+  },
+  "power_analysis": {
+    "observed_lift_pct": 2.61,
+    "observed_effect_size_cohens_d": 0.0388,
+    "actual_statistical_power": 0.316,
+    "minimum_detectable_effect_pct": 4.9,
+    "sample_size_used_per_variant": 2907,
+    "sample_size_needed_for_80_pct_power": 10417,
+    "interpretation": "This test had only 31% power to detect the observed effect. With 2,907 users per variant, we could only reliably detect effects \u22654.9%. The observed +2.61% is directionally encouraging but we cannot confidently reject the null hypothesis. To properly test this feature, we need ~10,417 users per variant."
+  },
+  "decision": "RE-RUN WITH PROPER POWER",
+  "teaching_moment": "A non-significant p-value does not mean \"no effect\". It can mean \"effect exists but we had insufficient sample size to detect it\". This test was sized for an 8% MDE but the true effect is around 2-3%. Killing this feature based on p=0.13 would be a mistake \u2014 the correct response is to re-run with appropriate sample size.",
+  "root_cause": "MDE was set at 8% at design time, but realistic expectations for this type of feature should have been 2-5%. Team overestimated expected effect, leading to undersizing.",
+  "policy_implication": "Recommend: MDE at test design should be anchored to historical effect sizes for similar features, not to \"what would be exciting\". Default MDE for engagement features should be 3% unless there is strong reason otherwise.",
+  "one_liner": "p=0.13 does not mean \"no effect\". It means \"we did not size this test properly\"."
+}
