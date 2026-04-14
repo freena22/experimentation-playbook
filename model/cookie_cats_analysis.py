@@ -26,9 +26,15 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import json
 import os
+from pathlib import Path
 
-os.makedirs('/home/claude/results', exist_ok=True)
-os.makedirs('/home/claude/charts', exist_ok=True)
+_ROOT = Path(__file__).resolve().parent.parent
+EXPERIMENTS_DIR = _ROOT / "data" / "experiments"
+RESULTS_DIR = _ROOT / "data" / "results"
+CHARTS_DIR = _ROOT / "charts"
+
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+CHARTS_DIR.mkdir(parents=True, exist_ok=True)
 np.random.seed(2025)
 
 COLORS = {
@@ -55,7 +61,7 @@ print("=" * 70)
 print("COOKIE CATS DEEP DIVE")
 print("=" * 70)
 
-df = pd.read_csv('/home/claude/experiments/cookie_cats.csv')
+df = pd.read_csv(EXPERIMENTS_DIR / 'cookie_cats.csv')
 print(f"\nDataset: {len(df):,} users")
 print(f"Variants: {df['version'].value_counts().to_dict()}")
 print(f"\nFirst rows:")
@@ -369,10 +375,10 @@ cookie_results = {
     ),
 }
 
-with open('/home/claude/results/cookie_cats_results.json', 'w') as f:
+with open(RESULTS_DIR / 'cookie_cats_results.json', 'w') as f:
     json.dump(cookie_results, f, indent=2)
 
 print(f"\n  ★ DECISION: Keep gate at level 30")
 print(f"  ★ 7-day retention is {ret7_lift:.2f}% higher with gate_30, p={p_value_7d:.3f}")
 print(f"  ★ Bayesian P(gate_30 wins at D7) = {p_gate30_better_d7:.4f}")
-print(f"\nResults saved to /home/claude/results/cookie_cats_results.json")
+print(f"\nResults saved to data/results/cookie_cats_results.json")

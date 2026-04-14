@@ -15,10 +15,13 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://freena22.github.io/experimentation-playbook/" />
 
+  <meta property="og:image" content="https://freena22.github.io/experimentation-playbook/og-card.png" />
+
   <!-- Twitter card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="6 A/B Tests, 2 Ships: An Experimentation Program Review" />
   <meta name="twitter:description" content="How I would run, read, and learn from a quarter of experiments at a consumer SaaS company." />
+  <meta name="twitter:image" content="https://freena22.github.io/experimentation-playbook/og-card.png" />
 
   <!-- Fonts & Tailwind (required by dashboard JSX) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -29,10 +32,19 @@
     @media (max-width: 768px) {
       .recharts-responsive-container { min-height: 200px; }
     }
+    /* Loading spinner shown while CDN scripts compile */
+    #loader { display: flex; flex-direction: column; align-items: center; justify-content: center;
+              height: 100vh; gap: 16px; color: #6B7280; font-size: 14px; }
+    #loader .spinner { width: 36px; height: 36px; border: 3px solid #E5E7EB;
+                       border-top-color: #3B82F6; border-radius: 50%;
+                       animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <div id="loader"><div class="spinner"></div>Loading dashboard&hellip;</div>
+  </div>
 
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>

@@ -19,9 +19,15 @@ import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
 import os
+from pathlib import Path
+
+_ROOT = Path(__file__).resolve().parent.parent
+EXPERIMENTS_DIR = _ROOT / "data" / "experiments"
+RESULTS_DIR = _ROOT / "data" / "results"
+CHARTS_DIR = _ROOT / "charts"
 
 np.random.seed(2025)
-os.makedirs('/home/claude/experiments', exist_ok=True)
+EXPERIMENTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # =============================================================================
 # Helper: assign users to variants with randomization
@@ -68,7 +74,7 @@ treat_mask = users['variant'] == 'treatment'
 users.loc[control_mask, 'completed_signup'] = np.random.binomial(1, base_rate, control_mask.sum())
 users.loc[treat_mask, 'completed_signup'] = np.random.binomial(1, base_rate * (1 + lift), treat_mask.sum())
 
-users.to_csv('/home/claude/experiments/E1_social_login.csv', index=False)
+users.to_csv(EXPERIMENTS_DIR / 'E1_social_login.csv', index=False)
 print(f"  Users: {n:,}")
 print(f"  Control completion: {users[control_mask]['completed_signup'].mean():.3f}")
 print(f"  Treatment completion: {users[treat_mask]['completed_signup'].mean():.3f}")
@@ -116,7 +122,7 @@ for tenure in ['new', 'returning', 'tenured']:
     users.loc[control_ix, 'converted_to_paid'] = np.random.binomial(1, base, control_ix.sum())
     users.loc[treat_ix, 'converted_to_paid'] = np.random.binomial(1, base * (1 + lift), treat_ix.sum())
 
-users.to_csv('/home/claude/experiments/E2_extended_trial.csv', index=False)
+users.to_csv(EXPERIMENTS_DIR / 'E2_extended_trial.csv', index=False)
 print(f"  Users: {n:,}")
 print(f"  Overall control: {users[users['variant']=='control']['converted_to_paid'].mean():.4f}")
 print(f"  Overall treatment: {users[users['variant']=='treatment']['converted_to_paid'].mean():.4f}")
@@ -164,7 +170,7 @@ for week_num in range(4):
                           'week': week_num + 1, 'opened_push': opened})
 
 df_e3 = pd.DataFrame(records)
-df_e3.to_csv('/home/claude/experiments/E3_push_time.csv', index=False)
+df_e3.to_csv(EXPERIMENTS_DIR / 'E3_push_time.csv', index=False)
 print(f"  User-days: {len(df_e3):,}")
 print(f"  Weekly observed lift:")
 for w in range(1, 5):
@@ -219,7 +225,7 @@ for var, cond_lift in [('control', 0), ('treatment', d30_conditional_lift)]:
     mask = (users['variant'] == var) & (users['d7_retained'] == 1)
     users.loc[mask, 'd30_retained'] = np.random.binomial(1, base_d30_given_d7 * (1 + cond_lift), mask.sum())
 
-users.to_csv('/home/claude/experiments/E4_onboarding.csv', index=False)
+users.to_csv(EXPERIMENTS_DIR / 'E4_onboarding.csv', index=False)
 print(f"  Users: {n:,}")
 for metric in ['d1_activated', 'd7_retained', 'd30_retained']:
     c = users[users['variant']=='control'][metric].mean()
@@ -260,7 +266,7 @@ for var, lift in [('control', 0), ('treatment', true_lift)]:
         n=3, p=3/(3+mean_val), size=mask.sum()
     )
 
-users.to_csv('/home/claude/experiments/E5_ai_practice.csv', index=False)
+users.to_csv(EXPERIMENTS_DIR / 'E5_ai_practice.csv', index=False)
 print(f"  Users: {n:,} (underpowered)")
 c_mean = users[users['variant']=='control']['sessions_14d'].mean()
 t_mean = users[users['variant']=='treatment']['sessions_14d'].mean()
@@ -322,7 +328,7 @@ for var in ['control', 'treatment', 'holdout']:
     draws = np.clip(draws, 0, 30).round().astype(int)
     users.loc[mask, 'active_days_30'] = draws
 
-users.to_csv('/home/claude/experiments/E6_leaderboard.csv', index=False)
+users.to_csv(EXPERIMENTS_DIR / 'E6_leaderboard.csv', index=False)
 print(f"  Users: {n:,}")
 print(f"  Variant split:")
 for v in ['control', 'treatment', 'holdout']:
@@ -407,7 +413,7 @@ cookie_cats = pd.DataFrame({
     'retention_1': ret_1,
     'retention_7': ret_7,
 })
-cookie_cats.to_csv('/home/claude/experiments/cookie_cats.csv', index=False)
+cookie_cats.to_csv(EXPERIMENTS_DIR / 'cookie_cats.csv', index=False)
 print(f"  Users: {len(cookie_cats):,}")
 print(f"  Split:")
 print(f"    gate_30: {(cookie_cats['version']=='gate_30').sum():,}")
@@ -425,6 +431,6 @@ print(f"  Gamerounds: median={cookie_cats['sum_gamerounds'].median():.0f}, "
 print("\n" + "=" * 70)
 print("DATA GENERATION COMPLETE")
 print("=" * 70)
-for f in sorted(os.listdir('/home/claude/experiments')):
-    size = os.path.getsize(f'/home/claude/experiments/{f}') / 1024
+for f in sorted(os.listdir(EXPERIMENTS_DIR)):
+    size = os.path.getsize(EXPERIMENTS_DIR / f) / 1024
     print(f"  {f:30s} {size:7.1f} KB")

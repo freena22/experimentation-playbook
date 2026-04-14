@@ -11,8 +11,14 @@ import matplotlib.patches as mpatches
 from matplotlib.patches import Rectangle
 import json
 import os
+from pathlib import Path
 
-os.makedirs('/home/claude/charts', exist_ok=True)
+_ROOT = Path(__file__).resolve().parent.parent
+EXPERIMENTS_DIR = _ROOT / "data" / "experiments"
+RESULTS_DIR = _ROOT / "data" / "results"
+CHARTS_DIR = _ROOT / "charts"
+
+CHARTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # Consulting-grade palette
 COLORS = {
@@ -43,7 +49,7 @@ plt.rcParams.update({
 
 
 def save(fig, name):
-    fig.savefig(f'/home/claude/charts/{name}.png', dpi=140, bbox_inches='tight', 
+    fig.savefig(CHARTS_DIR / f'{name}.png', dpi=140, bbox_inches='tight', 
                 facecolor='white', edgecolor='none')
     plt.close(fig)
     print(f"  ✓ {name}.png")
@@ -53,7 +59,7 @@ def save(fig, name):
 # E1 — Clean winner, segment consistency
 # ============================================================================
 print("\nE1: Social Login")
-with open('/home/claude/results/E1_results.json') as f:
+with open(RESULTS_DIR / 'E1_results.json') as f:
     e1 = json.load(f)
 
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
@@ -125,7 +131,7 @@ save(fig, 'E1_social_login')
 # E2 — Simpson's paradox
 # ============================================================================
 print("\nE2: Extended Trial")
-with open('/home/claude/results/E2_results.json') as f:
+with open(RESULTS_DIR / 'E2_results.json') as f:
     e2 = json.load(f)
 
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
@@ -197,7 +203,7 @@ save(fig, 'E2_extended_trial')
 # E3 — Novelty decay
 # ============================================================================
 print("\nE3: Push Time Shift")
-with open('/home/claude/results/E3_results.json') as f:
+with open(RESULTS_DIR / 'E3_results.json') as f:
     e3 = json.load(f)
 
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
@@ -267,7 +273,7 @@ save(fig, 'E3_push_time')
 # E4 — Primary metric vs North Star divergence
 # ============================================================================
 print("\nE4: Onboarding")
-with open('/home/claude/results/E4_results.json') as f:
+with open(RESULTS_DIR / 'E4_results.json') as f:
     e4 = json.load(f)
 
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
@@ -343,7 +349,7 @@ save(fig, 'E4_onboarding')
 # E5 — Underpowered test
 # ============================================================================
 print("\nE5: AI Conversation")
-with open('/home/claude/results/E5_results.json') as f:
+with open(RESULTS_DIR / 'E5_results.json') as f:
     e5 = json.load(f)
 
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
@@ -406,7 +412,7 @@ save(fig, 'E5_ai_practice')
 # E6 — CUPED + Bayesian + holdout
 # ============================================================================
 print("\nE6: Leaderboard")
-with open('/home/claude/results/E6_results.json') as f:
+with open(RESULTS_DIR / 'E6_results.json') as f:
     e6 = json.load(f)
 
 fig, axes = plt.subplots(1, 3, figsize=(18, 5))
@@ -589,5 +595,5 @@ save(fig, 'Portfolio_summary')
 print("\n" + "=" * 70)
 print("ALL CHARTS GENERATED")
 print("=" * 70)
-for f in sorted(os.listdir('/home/claude/charts')):
+for f in sorted(os.listdir(CHARTS_DIR)):
     print(f"  {f}")

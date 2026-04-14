@@ -10,6 +10,12 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.stats import beta as beta_dist
 from scipy import stats
+from pathlib import Path
+
+_ROOT = Path(__file__).resolve().parent.parent
+EXPERIMENTS_DIR = _ROOT / "data" / "experiments"
+RESULTS_DIR = _ROOT / "data" / "results"
+CHARTS_DIR = _ROOT / "charts"
 
 COLORS = {
     'gate_30': '#3B82F6',
@@ -30,8 +36,8 @@ plt.rcParams.update({
     'axes.titlesize': 12,
 })
 
-df = pd.read_csv('/home/claude/experiments/cookie_cats.csv')
-with open('/home/claude/results/cookie_cats_results.json') as f:
+df = pd.read_csv(EXPERIMENTS_DIR / 'cookie_cats.csv')
+with open(RESULTS_DIR / 'cookie_cats_results.json') as f:
     results = json.load(f)
 
 np.random.seed(42)
@@ -84,7 +90,7 @@ ax.text(0.5, -0.18, f'χ² = {srm["chi2"]:.3f}  |  Expected 50/50, observed 50.1
        transform=ax.transAxes, ha='center', fontsize=10, color='#6B7280', style='italic')
 
 plt.suptitle('Cookie Cats: Data Quality & Sanity Checks', fontsize=14, fontweight='bold', y=1.02)
-plt.savefig('/home/claude/charts/CC_01_data_quality.png', dpi=140, bbox_inches='tight',
+plt.savefig(CHARTS_DIR / 'CC_01_data_quality.png', dpi=140, bbox_inches='tight',
            facecolor='white')
 plt.close()
 print("✓ CC_01_data_quality.png")
@@ -137,7 +143,7 @@ ax.text(0.5, 0.92, f'Δ = {diff_d7:+.2f}pp\n95% CI: [{r7["ci_95_pp"][0]:+.2f}pp,
 
 plt.suptitle('Cookie Cats: Retention Comparison\n7-day matters more than 1-day for engagement decisions',
             fontsize=14, fontweight='bold', y=1.05)
-plt.savefig('/home/claude/charts/CC_02_retention.png', dpi=140, bbox_inches='tight',
+plt.savefig(CHARTS_DIR / 'CC_02_retention.png', dpi=140, bbox_inches='tight',
            facecolor='white')
 plt.close()
 print("✓ CC_02_retention.png")
@@ -198,7 +204,7 @@ ax.text(0.02, 0.95,
 
 plt.suptitle('Cookie Cats: Bayesian Posterior Analysis\nUncertainty visualized — D1 ambiguous, D7 conclusive',
             fontsize=14, fontweight='bold', y=1.05)
-plt.savefig('/home/claude/charts/CC_03_bayesian.png', dpi=140, bbox_inches='tight',
+plt.savefig(CHARTS_DIR / 'CC_03_bayesian.png', dpi=140, bbox_inches='tight',
            facecolor='white')
 plt.close()
 print("✓ CC_03_bayesian.png")
@@ -250,7 +256,7 @@ ax.text(0.5, 0.96,
 plt.suptitle('Cookie Cats: 7-Day Retention by Engagement Segment',
             fontsize=14, fontweight='bold', y=1.02)
 plt.tight_layout()
-plt.savefig('/home/claude/charts/CC_04_segmentation.png', dpi=140, bbox_inches='tight',
+plt.savefig(CHARTS_DIR / 'CC_04_segmentation.png', dpi=140, bbox_inches='tight',
            facecolor='white')
 plt.close()
 print("✓ CC_04_segmentation.png")
@@ -369,7 +375,7 @@ ax.text(0.05, 0.85, explanation, fontsize=10, va='top', ha='left',
 plt.suptitle('Cookie Cats: A real-world A/B test where intuition is wrong',
             fontsize=15, fontweight='bold', y=1.00)
 plt.tight_layout()
-plt.savefig('/home/claude/charts/CC_05_decision.png', dpi=140, bbox_inches='tight',
+plt.savefig(CHARTS_DIR / 'CC_05_decision.png', dpi=140, bbox_inches='tight',
            facecolor='white')
 plt.close()
 print("✓ CC_05_decision.png")

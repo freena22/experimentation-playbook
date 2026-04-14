@@ -20,8 +20,14 @@ from scipy import stats
 from scipy.stats import chi2_contingency, norm, beta
 import json
 import os
+from pathlib import Path
 
-os.makedirs('/home/claude/results', exist_ok=True)
+_ROOT = Path(__file__).resolve().parent.parent
+EXPERIMENTS_DIR = _ROOT / "data" / "experiments"
+RESULTS_DIR = _ROOT / "data" / "results"
+CHARTS_DIR = _ROOT / "charts"
+
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 np.random.seed(2025)
 
 # =============================================================================
@@ -145,7 +151,7 @@ print("=" * 70)
 print("E1: Social Login at Signup")
 print("=" * 70)
 
-df = pd.read_csv('/home/claude/experiments/E1_social_login.csv')
+df = pd.read_csv(EXPERIMENTS_DIR / 'E1_social_login.csv')
 c = df[df['variant'] == 'control']
 t = df[df['variant'] == 'treatment']
 
@@ -191,7 +197,7 @@ e1_results = {
     'one_liner': f"+{test_result['relative_lift_pct']}% signup completion, consistent across all segments",
 }
 
-with open('/home/claude/results/E1_results.json', 'w') as f:
+with open(RESULTS_DIR / 'E1_results.json', 'w') as f:
     json.dump(e1_results, f, indent=2)
 
 print(f"  SRM check: {srm}")
@@ -208,7 +214,7 @@ print("\n" + "=" * 70)
 print("E2: Extended Trial 7d → 14d")
 print("=" * 70)
 
-df = pd.read_csv('/home/claude/experiments/E2_extended_trial.csv')
+df = pd.read_csv(EXPERIMENTS_DIR / 'E2_extended_trial.csv')
 c = df[df['variant'] == 'control']
 t = df[df['variant'] == 'treatment']
 
@@ -289,7 +295,7 @@ e2_results = {
     'one_liner': 'Flat overall — but a clear win for new users and a loss for tenured users. Ship to new only.',
 }
 
-with open('/home/claude/results/E2_results.json', 'w') as f:
+with open(RESULTS_DIR / 'E2_results.json', 'w') as f:
     json.dump(e2_results, f, indent=2)
 
 print(f"  Overall: {overall['relative_lift_pct']:+.2f}%, p={overall['p_value']}")
@@ -306,7 +312,7 @@ print("\n" + "=" * 70)
 print("E3: Push Notification Time Shift")
 print("=" * 70)
 
-df = pd.read_csv('/home/claude/experiments/E3_push_time.csv')
+df = pd.read_csv(EXPERIMENTS_DIR / 'E3_push_time.csv')
 
 # Key analysis: weekly decay
 weekly_results = []
@@ -374,7 +380,7 @@ e3_results = {
     'one_liner': 'Week 1 showed +15%. Week 4 showed +2%. Classic novelty decay — kill.',
 }
 
-with open('/home/claude/results/E3_results.json', 'w') as f:
+with open(RESULTS_DIR / 'E3_results.json', 'w') as f:
     json.dump(e3_results, f, indent=2)
 
 print(f"  Weekly lift decay:")
@@ -392,7 +398,7 @@ print("\n" + "=" * 70)
 print("E4: Onboarding 5 → 3 Steps")
 print("=" * 70)
 
-df = pd.read_csv('/home/claude/experiments/E4_onboarding.csv')
+df = pd.read_csv(EXPERIMENTS_DIR / 'E4_onboarding.csv')
 c = df[df['variant'] == 'control']
 t = df[df['variant'] == 'treatment']
 
@@ -486,7 +492,7 @@ e4_results = {
     'one_liner': 'D1 activation +12% looked great. D30 retention -9.5% killed it.',
 }
 
-with open('/home/claude/results/E4_results.json', 'w') as f:
+with open(RESULTS_DIR / 'E4_results.json', 'w') as f:
     json.dump(e4_results, f, indent=2)
 
 print(f"  Funnel analysis:")
@@ -504,7 +510,7 @@ print("\n" + "=" * 70)
 print("E5: AI Conversation Practice")
 print("=" * 70)
 
-df = pd.read_csv('/home/claude/experiments/E5_ai_practice.csv')
+df = pd.read_csv(EXPERIMENTS_DIR / 'E5_ai_practice.csv')
 c = df[df['variant'] == 'control']
 t = df[df['variant'] == 'treatment']
 
@@ -590,7 +596,7 @@ e5_results = {
     'one_liner': 'p=0.13 does not mean "no effect". It means "we did not size this test properly".',
 }
 
-with open('/home/claude/results/E5_results.json', 'w') as f:
+with open(RESULTS_DIR / 'E5_results.json', 'w') as f:
     json.dump(e5_results, f, indent=2)
 
 print(f"  Observed: {test_result['relative_lift_pct']:+.2f}%, p={test_result['p_value']}")
@@ -607,7 +613,7 @@ print("\n" + "=" * 70)
 print("E6: Leaderboard Gamification")
 print("=" * 70)
 
-df = pd.read_csv('/home/claude/experiments/E6_leaderboard.csv')
+df = pd.read_csv(EXPERIMENTS_DIR / 'E6_leaderboard.csv')
 c = df[df['variant'] == 'control']
 t = df[df['variant'] == 'treatment']
 h = df[df['variant'] == 'holdout']
@@ -711,7 +717,7 @@ e6_results = {
     'one_liner': '+22% DAU, validated via holdout, variance-reduced via CUPED. Textbook ship.',
 }
 
-with open('/home/claude/results/E6_results.json', 'w') as f:
+with open(RESULTS_DIR / 'E6_results.json', 'w') as f:
     json.dump(e6_results, f, indent=2)
 
 print(f"  Standard analysis: {basic_result['relative_lift_pct']:+.2f}%, p={basic_result['p_value']}")
@@ -777,7 +783,7 @@ all_results = {
     }
 }
 
-with open('/home/claude/results/portfolio_summary.json', 'w') as f:
+with open(RESULTS_DIR / 'portfolio_summary.json', 'w') as f:
     json.dump(all_results, f, indent=2)
 
 print(f"\n  Ship rate: {all_results['portfolio_summary']['ship_rate_pct']}%")
@@ -787,7 +793,7 @@ for p in all_results['cross_experiment_learnings']:
     print(f"    - {p['pattern']}")
 
 print("\n" + "=" * 70)
-print("ANALYSIS COMPLETE — all results saved to /home/claude/results/")
+print("ANALYSIS COMPLETE — all results saved to data/results/")
 print("=" * 70)
-for f in sorted(os.listdir('/home/claude/results')):
+for f in sorted(os.listdir(RESULTS_DIR)):
     print(f"  {f}")

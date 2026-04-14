@@ -222,11 +222,11 @@ The React dashboard is a single `.jsx` file that can be rendered in any React en
 
 ## How to Use This Project
 
-If you're evaluating **analytical skill**: see the [Cookie Cats Deep Dive](#) and the E2 / E4 / E5 experiment analyses.
+If you're evaluating **analytical skill**: see the [Cookie Cats Deep Dive](https://freena22.github.io/experimentation-playbook/) and the E2 / E4 / E5 experiment analyses.
 
-If you're evaluating **framework thinking**: see the [Program Dashboard](#) and [Trust & Governance Framework](#).
+If you're evaluating **framework thinking**: see the [Program Dashboard](https://freena22.github.io/experimentation-playbook/) and [Trust & Governance Framework](https://freena22.github.io/experimentation-playbook/).
 
-If you're evaluating **stakeholder communication**: see the [Executive Briefing](#) and any per-experiment one-pager in the Gallery.
+If you're evaluating **stakeholder communication**: see the [Executive Briefing](https://freena22.github.io/experimentation-playbook/) and any per-experiment one-pager in the Gallery.
 
 ---
 
