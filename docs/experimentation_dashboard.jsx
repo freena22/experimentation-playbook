@@ -287,7 +287,7 @@ const ProgramDashboard = ({ onSelectExperiment }) => {
             { value: "$697K", label: "Damage Prevented", color: "#FCA5A5" },
             { value: "3 of 6", label: "Wrong Calls Prevented", color: "#93C5FD" },
           ].map((s, i) => (
-            <div key={i}>
+            <div key={i} className="rounded-lg px-5 py-4" style={{ backgroundColor: "rgba(255,255,255,0.06)" }}>
               <div className="text-4xl font-bold" style={{ color: s.color }}>{s.value}</div>
               <div className="text-base text-slate-400 mt-1">{s.label}</div>
             </div>
