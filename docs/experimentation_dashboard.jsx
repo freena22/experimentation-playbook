@@ -1407,7 +1407,9 @@ function App() {
       {/* Footer */}
       <div className="border-t border-gray-200 bg-white mt-12">
         <div className="max-w-7xl mx-auto px-6 py-4 text-xs text-gray-400 text-center">
-          Experimentation Playbook · Q3 2025 Quarterly Review · Built by Freena Wang
+          Experimentation Playbook · Q3 2025 Quarterly Review · Built by{" "}
+          <a href="https://www.linkedin.com/in/freena-wang/" target="_blank" rel="noopener noreferrer"
+            className="text-blue-500 hover:text-blue-700 underline">Freena Wang</a>
         </div>
       </div>
     </div>
