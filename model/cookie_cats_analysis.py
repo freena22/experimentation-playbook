@@ -305,7 +305,7 @@ print("=" * 70)
 
 cookie_results = {
     'experiment_name': 'Cookie Cats: Gate placement (level 30 vs level 40)',
-    'data_source': 'Reproduced from public Cookie Cats benchmark dataset',
+    'data_source': 'Real public dataset (Kaggle, CC0 license)',
     'background': (
         'Cookie Cats is a popular mobile puzzle game. As players progress, '
         'they encounter "gates" that force them to either wait or pay to continue. '

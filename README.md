@@ -175,6 +175,8 @@ experimentation-playbook/
 ├── data/
 │   ├── experiments/                  # Generated CSVs (one per experiment)
 │   └── results/                      # Analysis output JSONs
+├── notebooks/
+│   └── cookie_cats_deep_dive.ipynb   # Narrative analysis walkthrough (real data, business-focused)
 ├── charts/                           # Static PNG charts (one per experiment + Cookie Cats)
 ├── docs/                             # GitHub Pages: index.html + experimentation_dashboard.jsx (CDN React/Recharts + Babel)
 ├── methodology.md                    # Technical methodology deep-dive
@@ -184,6 +186,7 @@ experimentation-playbook/
 
 **Key files:**
 
+- [`notebooks/cookie_cats_deep_dive.ipynb`](./notebooks/cookie_cats_deep_dive.ipynb) — Step-by-step business analysis of the real Cookie Cats dataset (90K players)
 - [`model/generate_experiment_data.py`](./model/generate_experiment_data.py) — Data generation with ground-truth effects and embedded teaching moments
 - [`model/analyze_experiments.py`](./model/analyze_experiments.py) — Analysis pipeline with methods tailored per experiment
 - [`methodology.md`](./methodology.md) — Full statistical methodology

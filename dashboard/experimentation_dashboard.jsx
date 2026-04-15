@@ -205,6 +205,17 @@ const PORTFOLIO = {
     { name: "Underpowered test producing false null", expts: ["E5"], recommendation: "Default MDE for engagement features should be 3%, not 8%", color: COLORS.warning },
     { name: "Simpson's paradox in pooled analysis", expts: ["E2"], recommendation: "Tenure-based segment analysis standard for monetization tests", color: COLORS.treatment },
   ],
+  programPnL: {
+    revenueFromShips: "$10.9M+",
+    revenueDetail: "E6: $10.7M projected · E2: $216K new-user segment",
+    damagePrevented: "$697K",
+    damageDetail: "E4 kill prevented D30 retention loss",
+  },
+  counterFactuals: [
+    { id: "E2", verb: "would have been killed", surface: "−4% overall conversion", reality: "+22.9% for new users (Simpson's paradox)", cost: "$216K/yr left on the table" },
+    { id: "E3", verb: "would have been shipped", surface: "+7.2% push open rate", reality: "Novelty effect — true steady-state lift only +2.4%", cost: "Deployed a decaying metric as permanent win" },
+    { id: "E4", verb: "would have been shipped", surface: "+12% D1 activation", reality: "D30 retention −9.5%", cost: "−$697K/yr in retention damage" },
+  ],
 };
 
 // ============================================================================
@@ -273,6 +284,41 @@ const ProgramDashboard = ({ onSelectExperiment }) => {
         <StatCard label="Users Tested" value="240K" sub="randomized exposure" />
         <StatCard label="Patterns Identified" value="4" sub="cross-experiment learnings" color={COLORS.primary} />
       </div>
+
+      {/* Program P&L */}
+      <div className="grid grid-cols-3 gap-4">
+        <StatCard label="Projected Revenue from Ships" value={PORTFOLIO.programPnL.revenueFromShips}
+          sub={PORTFOLIO.programPnL.revenueDetail} color={COLORS.positive} />
+        <StatCard label="Revenue Damage Prevented" value={PORTFOLIO.programPnL.damagePrevented}
+          sub={PORTFOLIO.programPnL.damageDetail} color={COLORS.negative} />
+        <StatCard label="Wrong Decisions Prevented" value="3 of 6"
+          sub="50% would have been called incorrectly without deeper analysis" color={COLORS.primary} />
+      </div>
+
+      {/* Counter-factual: Decision Quality */}
+      <Card>
+        <SectionTitle>Without Rigorous Analysis, Half These Experiments Would Have Been Decided Wrong</SectionTitle>
+        <div className="grid grid-cols-3 gap-4 mt-2">
+          {PORTFOLIO.counterFactuals.map(cf => (
+            <div key={cf.id} className="p-4 bg-red-50 rounded-lg border border-red-200">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="font-mono text-xs bg-red-200 text-red-800 px-1.5 py-0.5 rounded">{cf.id}</span>
+                <span className="text-xs font-bold text-red-800">{cf.verb}</span>
+              </div>
+              <div className="text-xs text-red-700 space-y-1">
+                <div><span className="font-semibold">Surface read:</span> {cf.surface}</div>
+                <div><span className="font-semibold">Deeper truth:</span> {cf.reality}</div>
+                <div className="font-bold pt-1 border-t border-red-200 mt-1">→ {cf.cost}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 px-4 py-3 bg-blue-50 rounded-lg border border-blue-100">
+          <p className="text-xs text-blue-900 font-medium leading-relaxed">
+            The value of an experimentation program isn't just the features it ships — it's the <span className="font-bold">bad decisions it prevents</span>. A surface-level read of these experiments would have shipped a novelty-decayed feature, destroyed $697K in retention value, and missed a $216K segment opportunity.
+          </p>
+        </div>
+      </Card>
 
       {/* Two main charts */}
       <div className="grid grid-cols-2 gap-6">
@@ -388,7 +434,7 @@ const ProgramDashboard = ({ onSelectExperiment }) => {
           The quarter in one sentence
         </div>
         <p className="text-base text-blue-900 leading-relaxed">
-          Out of 6 experiments, only 2 shipped unconditionally. But the other 4 generated insights that will shape how we run the next 50 experiments. <span className="font-bold">The real output of an experimentation program isn't ship decisions — it's organizational learning.</span>
+          Out of 6 experiments, only 2 shipped unconditionally — and 3 would have been decided incorrectly based on surface-level analysis alone. <span className="font-bold">The real ROI of an experimentation program isn't the features it ships — it's the bad decisions it prevents and the organizational learning it creates.</span>
         </p>
       </div>
     </div>
@@ -783,8 +829,8 @@ const CookieCatsDeepDive = () => {
       {/* Sample & SRM */}
       <div className="grid grid-cols-3 gap-4">
         <StatCard label="Total Players" value={cc.sampleSizes.total.toLocaleString()} />
-        <StatCard label="gate_30 (control)" value={cc.sampleSizes.gate_30.toLocaleString()} sub="50.17%" />
-        <StatCard label="gate_40 (treatment)" value={cc.sampleSizes.gate_40.toLocaleString()} sub="49.83%" />
+        <StatCard label="gate_30 (control)" value={cc.sampleSizes.gate_30.toLocaleString()} sub="49.6%" />
+        <StatCard label="gate_40 (treatment)" value={cc.sampleSizes.gate_40.toLocaleString()} sub="50.4%" />
       </div>
 
       {/* Retention comparison */}
@@ -822,7 +868,7 @@ const CookieCatsDeepDive = () => {
             ]}>
               <CartesianGrid strokeDasharray="3 3" stroke={COLORS.border} />
               <XAxis dataKey="name" stroke={COLORS.subtext} />
-              <YAxis stroke={COLORS.subtext} domain={[18, 26]} unit="%" />
+              <YAxis stroke={COLORS.subtext} domain={[17, 20]} unit="%" />
               <Tooltip />
               <Bar dataKey="value" radius={[6, 6, 0, 0]}>
                 <Cell fill={COLORS.treatment} fillOpacity={0.85} />
@@ -874,7 +920,7 @@ const CookieCatsDeepDive = () => {
         </ResponsiveContainer>
         <div className="mt-3 p-4 bg-amber-50 rounded-lg border border-amber-200">
           <p className="text-sm text-amber-900">
-            <span className="font-bold">Engaged players (31-100 rounds) lose the most: -1.27pp.</span> They're also the highest-LTV segment, making this difference more meaningful than the headline number suggests.
+            <span className="font-bold">Engaged players (31–100 rounds) lose the most: −2.18pp.</span> This is the highest-LTV segment — players actively progressing and most likely to convert. The aggregate −0.82pp undersells the real cost.
           </p>
         </div>
       </Card>
