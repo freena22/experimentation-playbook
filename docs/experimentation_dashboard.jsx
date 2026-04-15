@@ -275,61 +275,57 @@ const ProgramDashboard = ({ onSelectExperiment }) => {
 
   return (
     <div className="space-y-6">
-      {/* Hero */}
-      <div>
+      {/* Hero + Inline KPIs */}
+      <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
         <h2 className="text-2xl font-bold text-gray-900">Q3 2025 Experimentation Review</h2>
-        <p className="text-sm text-gray-500 mt-1">
-          6 experiments · 240K users tested · 33% unconditional ship rate · Presented to VP Growth, October 2025
-        </p>
+        <p className="text-sm text-slate-500 mt-1">Presented to VP Growth, October 2025</p>
+        <div className="flex items-baseline gap-8 mt-5 pt-4 border-t border-slate-100">
+          {[
+            { value: "6", label: "experiments", sub: "4 areas" },
+            { value: "33%", label: "ship rate", color: COLORS.positive },
+            { value: "240K", label: "users tested" },
+            { value: "$10.9M+", label: "revenue from ships", color: COLORS.positive },
+            { value: "$697K", label: "damage prevented", color: COLORS.negativeSoft },
+            { value: "3 of 6", label: "wrong calls prevented", color: COLORS.primary },
+          ].map((s, i) => (
+            <div key={i} className="flex items-baseline gap-1.5">
+              <span className="text-xl font-bold" style={{ color: s.color || COLORS.text }}>{s.value}</span>
+              <span className="text-xs text-slate-400">{s.label}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Top KPIs */}
-      <div className="grid grid-cols-4 gap-4">
-        <StatCard label="Experiments Run" value="6" sub="across acquisition, activation, engagement, monetization" />
-        <StatCard label="Ship Rate" value="33%" sub="2 unconditional + 1 segment-level ship" color={COLORS.positive} />
-        <StatCard label="Users Tested" value="240K" sub="randomized exposure" />
-        <StatCard label="Patterns Identified" value="4" sub="cross-experiment learnings" color={COLORS.primary} />
-      </div>
-
-      {/* Program P&L */}
-      <div className="grid grid-cols-3 gap-4">
-        <StatCard label="Projected Revenue from Ships" value={PORTFOLIO.programPnL.revenueFromShips}
-          sub={PORTFOLIO.programPnL.revenueDetail} color={COLORS.positive} />
-        <StatCard label="Revenue Damage Prevented" value={PORTFOLIO.programPnL.damagePrevented}
-          sub={PORTFOLIO.programPnL.damageDetail} color={COLORS.negativeSoft} />
-        <StatCard label="Wrong Decisions Prevented" value="3 of 6"
-          sub="50% would have been called incorrectly without deeper analysis" color={COLORS.primary} />
-      </div>
-
-      {/* Counter-factual: Decision Quality */}
-      <Card>
-        <SectionTitle>Without Rigorous Analysis, Half These Experiments Would Have Been Decided Wrong</SectionTitle>
-        <div className="grid grid-cols-3 gap-4 mt-2">
+      {/* Counter-factual: Decision Quality — dark theme */}
+      <div className="rounded-xl p-6" style={{ backgroundColor: "#1E293B" }}>
+        <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
+          Without Rigorous Analysis, Half These Experiments Would Have Been Decided Wrong
+        </div>
+        <div className="grid grid-cols-3 gap-4">
           {PORTFOLIO.counterFactuals.map(cf => {
-            const accent = cf.id === "E2" ? { bg: "bg-amber-50", border: "border-amber-200", badge: "bg-amber-100 text-amber-800", text: "text-amber-900", muted: "text-amber-700", line: "border-amber-200" }
-              : cf.id === "E3" ? { bg: "bg-orange-50", border: "border-orange-200", badge: "bg-orange-100 text-orange-800", text: "text-orange-900", muted: "text-orange-700", line: "border-orange-200" }
-              : { bg: "bg-rose-50", border: "border-rose-200", badge: "bg-rose-100 text-rose-800", text: "text-rose-900", muted: "text-rose-700", line: "border-rose-200" };
+            const accent = cf.id === "E2" ? "#F59E0B" : cf.id === "E3" ? "#FB923C" : "#F87171";
             return (
-              <div key={cf.id} className={`p-4 ${accent.bg} rounded-lg border ${accent.border}`}>
+              <div key={cf.id} className="p-4 rounded-lg" style={{ backgroundColor: "rgba(255,255,255,0.06)" }}>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className={`font-mono text-xs ${accent.badge} px-1.5 py-0.5 rounded font-bold`}>{cf.id}</span>
-                  <span className={`text-xs font-bold ${accent.text}`}>{cf.verb}</span>
+                  <span className="font-mono text-xs px-1.5 py-0.5 rounded font-bold"
+                    style={{ backgroundColor: accent, color: "#1E293B" }}>{cf.id}</span>
+                  <span className="text-xs font-bold text-slate-300">{cf.verb}</span>
                 </div>
-                <div className={`text-xs ${accent.muted} space-y-1`}>
-                  <div><span className="font-semibold">Surface read:</span> {cf.surface}</div>
-                  <div><span className="font-semibold">Deeper truth:</span> {cf.reality}</div>
-                  <div className={`font-bold pt-1.5 border-t ${accent.line} mt-1.5 ${accent.text}`}>→ {cf.cost}</div>
+                <div className="text-xs text-slate-400 space-y-1">
+                  <div><span className="font-semibold text-slate-300">Surface read:</span> {cf.surface}</div>
+                  <div><span className="font-semibold text-slate-300">Deeper truth:</span> {cf.reality}</div>
+                  <div className="font-bold pt-1.5 mt-1.5 text-white" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+                    → {cf.cost}
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
-        <div className="mt-4 px-4 py-3 bg-slate-50 rounded-lg border border-slate-200">
-          <p className="text-xs text-slate-700 font-medium leading-relaxed">
-            The value of an experimentation program isn't just the features it ships — it's the <span className="font-bold text-slate-900">bad decisions it prevents</span>. A surface-level read of these experiments would have shipped a novelty-decayed feature, destroyed $697K in retention value, and missed a $216K segment opportunity.
-          </p>
-        </div>
-      </Card>
+        <p className="text-xs text-slate-500 mt-4 leading-relaxed">
+          The value of an experimentation program isn't just the features it ships — it's the <span className="text-slate-300 font-semibold">bad decisions it prevents</span>.
+        </p>
+      </div>
 
       {/* Two main charts */}
       <div className="grid grid-cols-2 gap-6">
