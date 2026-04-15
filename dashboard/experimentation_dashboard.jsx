@@ -1389,19 +1389,24 @@ export default function App() {
           </div>
 
           {/* Tab navigation */}
-          <div className="flex gap-1 mt-5 -mb-5 overflow-x-auto">
+          <div className="relative mt-5 -mb-5">
+          <div className="flex gap-1 overflow-x-auto pb-px" style={{ WebkitOverflowScrolling: "touch" }}>
             {tabs.map(t => (
               <button key={t.id}
                 onClick={() => setTab(t.id)}
-                className={`px-4 py-3 text-sm font-medium border-b-2 transition whitespace-nowrap ${
+                className={`px-3 md:px-4 py-3 text-xs md:text-sm font-medium border-b-2 transition whitespace-nowrap ${
                   tab === t.id
                     ? "border-blue-600 text-blue-600"
                     : "border-transparent text-gray-500 hover:text-gray-900"
                 }`}>
-                <span className="mr-2">{t.icon}</span>
+                <span className="mr-1 md:mr-2">{t.icon}</span>
                 {t.label}
               </button>
             ))}
+            <div className="md:hidden flex-shrink-0 w-4" />
+          </div>
+          <div className="md:hidden absolute right-0 top-0 bottom-0 w-8 pointer-events-none"
+            style={{ background: "linear-gradient(to right, transparent, white)" }} />
           </div>
         </div>
       </div>
