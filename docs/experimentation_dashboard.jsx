@@ -288,8 +288,8 @@ const ProgramDashboard = ({ onSelectExperiment }) => {
             { value: "3 of 6", label: "Wrong Calls Prevented", color: "#93C5FD" },
           ].map((s, i) => (
             <div key={i} className="rounded-lg px-5 py-4" style={{ backgroundColor: "rgba(255,255,255,0.06)" }}>
-              <div className="text-4xl font-bold" style={{ color: s.color }}>{s.value}</div>
-              <div className="text-base text-slate-400 mt-1">{s.label}</div>
+              <div className="text-2xl font-bold" style={{ color: s.color }}>{s.value}</div>
+              <div className="text-xs text-slate-400 mt-1">{s.label}</div>
             </div>
           ))}
         </div>
@@ -1363,16 +1363,16 @@ const ExecutiveBriefing = () => (
 // MAIN APP
 // ============================================================================
 function App() {
-  const [tab, setTab] = useState("program");
+  const [tab, setTab] = useState("executive");
   const [selectedExp, setSelectedExp] = useState("E1");
 
   const tabs = [
+    { id: "executive", label: "Executive Briefing", icon: "📋" },
     { id: "program", label: "Program Dashboard", icon: "📊" },
     { id: "gallery", label: "Experiment Gallery", icon: "🔬" },
     { id: "cookiecats", label: "Cookie Cats Deep Dive", icon: "🎮" },
     { id: "designer", label: "Experiment Designer", icon: "🛠️" },
     { id: "governance", label: "Trust & Governance", icon: "🛡️" },
-    { id: "executive", label: "Executive Briefing", icon: "📋" },
   ];
 
   return (
