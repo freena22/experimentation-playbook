@@ -278,7 +278,7 @@ const ProgramDashboard = ({ onSelectExperiment }) => {
       {/* Hero KPIs — dark */}
       <div className="rounded-xl px-7 py-6" style={{ backgroundColor: "#1E293B" }}>
         <h2 className="text-xl font-bold text-white">Q3 2025 Experimentation Review</h2>
-        <div className="grid grid-cols-3 gap-x-10 gap-y-5 mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+        <div className="grid grid-cols-3 gap-x-10 gap-y-6 mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
           {[
             { value: "6", label: "Experiments Run", color: "#fff" },
             { value: "33%", label: "Ship Rate", color: "#34D399" },
@@ -288,8 +288,8 @@ const ProgramDashboard = ({ onSelectExperiment }) => {
             { value: "3 of 6", label: "Wrong Calls Prevented", color: "#93C5FD" },
           ].map((s, i) => (
             <div key={i}>
-              <div className="text-2xl font-bold" style={{ color: s.color }}>{s.value}</div>
-              <div className="text-xs text-slate-400 mt-0.5">{s.label}</div>
+              <div className="text-3xl font-bold" style={{ color: s.color }}>{s.value}</div>
+              <div className="text-sm text-slate-400 mt-1">{s.label}</div>
             </div>
           ))}
         </div>
