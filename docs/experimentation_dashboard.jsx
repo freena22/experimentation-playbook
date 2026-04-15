@@ -185,7 +185,7 @@ const COOKIE_CATS = {
   decision: "KEEP GATE AT LEVEL 30",
   background: "Cookie Cats is a popular puzzle game. The original gate was at level 30. Hypothesis: moving it to level 40 would improve retention by delaying friction.",
   sampleSizes: { gate_30: 44700, gate_40: 45489, total: 90189 },
-  srm: { passed: true, pValue: 0.0551 },
+  srm: { passed: true, pValue: 0.009 },
   retention1: { gate30: 44.82, gate40: 44.23, diff: -0.59, pValue: 0.074, significant: false, ci: [-1.24, 0.06] },
   retention7: { gate30: 19.02, gate40: 18.20, diff: -0.82, pValue: 0.002, significant: true, ci: [-1.33, -0.31] },
   bayesian: { d1ProbGate30Better: 0.962, d7ProbGate30Better: 0.999, probGate40LosesByOnePP: 0.243 },
