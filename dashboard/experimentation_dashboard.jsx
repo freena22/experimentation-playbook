@@ -283,8 +283,8 @@ const ProgramDashboard = ({ onSelectExperiment }) => {
             { value: "3 of 6", label: "Wrong Calls Prevented", color: "#93C5FD" },
           ].map((s, i) => (
             <div key={i}>
-              <div className="text-3xl font-bold" style={{ color: s.color }}>{s.value}</div>
-              <div className="text-sm text-slate-400 mt-1">{s.label}</div>
+              <div className="text-4xl font-bold" style={{ color: s.color }}>{s.value}</div>
+              <div className="text-base text-slate-400 mt-1">{s.label}</div>
             </div>
           ))}
         </div>
