@@ -275,46 +275,45 @@ const ProgramDashboard = ({ onSelectExperiment }) => {
 
   return (
     <div className="space-y-6">
-      {/* Hero + Inline KPIs */}
-      <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-        <h2 className="text-2xl font-bold text-gray-900">Q3 2025 Experimentation Review</h2>
-        <p className="text-sm text-slate-500 mt-1">Presented to VP Growth, October 2025</p>
-        <div className="flex items-baseline gap-8 mt-5 pt-4 border-t border-slate-100">
+      {/* Hero KPIs — dark */}
+      <div className="rounded-xl px-7 py-6" style={{ backgroundColor: "#1E293B" }}>
+        <h2 className="text-xl font-bold text-white">Q3 2025 Experimentation Review</h2>
+        <div className="grid grid-cols-3 gap-x-10 gap-y-5 mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
           {[
-            { value: "6", label: "experiments", sub: "4 areas" },
-            { value: "33%", label: "ship rate", color: COLORS.positive },
-            { value: "240K", label: "users tested" },
-            { value: "$10.9M+", label: "revenue from ships", color: COLORS.positive },
-            { value: "$697K", label: "damage prevented", color: COLORS.negativeSoft },
-            { value: "3 of 6", label: "wrong calls prevented", color: COLORS.primary },
+            { value: "6", label: "Experiments Run", color: "#fff" },
+            { value: "33%", label: "Ship Rate", color: "#34D399" },
+            { value: "240K", label: "Users Tested", color: "#fff" },
+            { value: "$10.9M+", label: "Revenue from Ships", color: "#34D399" },
+            { value: "$697K", label: "Damage Prevented", color: "#FCA5A5" },
+            { value: "3 of 6", label: "Wrong Calls Prevented", color: "#93C5FD" },
           ].map((s, i) => (
-            <div key={i} className="flex items-baseline gap-1.5">
-              <span className="text-xl font-bold" style={{ color: s.color || COLORS.text }}>{s.value}</span>
-              <span className="text-xs text-slate-400">{s.label}</span>
+            <div key={i}>
+              <div className="text-2xl font-bold" style={{ color: s.color }}>{s.value}</div>
+              <div className="text-xs text-slate-400 mt-0.5">{s.label}</div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Counter-factual: Decision Quality — dark theme */}
-      <div className="rounded-xl p-6" style={{ backgroundColor: "#1E293B" }}>
-        <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
-          Without Rigorous Analysis, Half These Experiments Would Have Been Decided Wrong
-        </div>
-        <div className="grid grid-cols-3 gap-4">
+      {/* Counter-factual: Decision Quality — white */}
+      <Card>
+        <SectionTitle>Without Rigorous Analysis, Half These Experiments Would Have Been Decided Wrong</SectionTitle>
+        <div className="grid grid-cols-3 gap-4 mt-2">
           {PORTFOLIO.counterFactuals.map(cf => {
-            const accent = cf.id === "E2" ? "#F59E0B" : cf.id === "E3" ? "#FB923C" : "#F87171";
+            const accent = cf.id === "E2" ? { bg: "#FFFBEB", border: "#FDE68A", badge: "#D97706" }
+              : cf.id === "E3" ? { bg: "#FFF7ED", border: "#FED7AA", badge: "#EA580C" }
+              : { bg: "#FFF1F2", border: "#FECDD3", badge: "#E11D48" };
             return (
-              <div key={cf.id} className="p-4 rounded-lg" style={{ backgroundColor: "rgba(255,255,255,0.06)" }}>
+              <div key={cf.id} className="p-4 rounded-lg border" style={{ backgroundColor: accent.bg, borderColor: accent.border }}>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="font-mono text-xs px-1.5 py-0.5 rounded font-bold"
-                    style={{ backgroundColor: accent, color: "#1E293B" }}>{cf.id}</span>
-                  <span className="text-xs font-bold text-slate-300">{cf.verb}</span>
+                  <span className="font-mono text-xs px-1.5 py-0.5 rounded font-bold text-white"
+                    style={{ backgroundColor: accent.badge }}>{cf.id}</span>
+                  <span className="text-xs font-bold text-slate-700">{cf.verb}</span>
                 </div>
-                <div className="text-xs text-slate-400 space-y-1">
-                  <div><span className="font-semibold text-slate-300">Surface read:</span> {cf.surface}</div>
-                  <div><span className="font-semibold text-slate-300">Deeper truth:</span> {cf.reality}</div>
-                  <div className="font-bold pt-1.5 mt-1.5 text-white" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+                <div className="text-xs text-slate-600 space-y-1">
+                  <div><span className="font-semibold text-slate-700">Surface read:</span> {cf.surface}</div>
+                  <div><span className="font-semibold text-slate-700">Deeper truth:</span> {cf.reality}</div>
+                  <div className="font-bold pt-1.5 mt-1.5 text-slate-900" style={{ borderTop: `1px solid ${accent.border}` }}>
                     → {cf.cost}
                   </div>
                 </div>
@@ -322,10 +321,12 @@ const ProgramDashboard = ({ onSelectExperiment }) => {
             );
           })}
         </div>
-        <p className="text-xs text-slate-500 mt-4 leading-relaxed">
-          The value of an experimentation program isn't just the features it ships — it's the <span className="text-slate-300 font-semibold">bad decisions it prevents</span>.
-        </p>
-      </div>
+        <div className="mt-4 px-4 py-3 bg-slate-50 rounded-lg">
+          <p className="text-xs text-slate-600 leading-relaxed">
+            The value of an experimentation program isn't just the features it ships — it's the <span className="font-bold text-slate-800">bad decisions it prevents</span>.
+          </p>
+        </div>
+      </Card>
 
       {/* Two main charts */}
       <div className="grid grid-cols-2 gap-6">
