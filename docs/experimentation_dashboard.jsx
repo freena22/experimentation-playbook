@@ -278,7 +278,7 @@ const ProgramDashboard = ({ onSelectExperiment }) => {
       {/* Hero KPIs — dark */}
       <div className="rounded-xl px-7 py-6" style={{ backgroundColor: "#1E293B" }}>
         <h2 className="text-xl font-bold text-white">Q3 2025 Experimentation Review</h2>
-        <div className="grid grid-cols-3 gap-x-10 gap-y-6 mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-10 gap-y-6 mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
           {[
             { value: "6", label: "Experiments Run", color: "#fff" },
             { value: "33%", label: "Ship Rate", color: "#34D399" },
@@ -298,7 +298,7 @@ const ProgramDashboard = ({ onSelectExperiment }) => {
       {/* Counter-factual: Decision Quality — white */}
       <Card>
         <SectionTitle>Without Rigorous Analysis, Half These Experiments Would Have Been Decided Wrong</SectionTitle>
-        <div className="grid grid-cols-3 gap-4 mt-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
           {PORTFOLIO.counterFactuals.map(cf => {
             const accent = cf.id === "E2" ? { bg: "#FFFBEB", border: "#FDE68A", badge: "#D97706" }
               : cf.id === "E3" ? { bg: "#FFF7ED", border: "#FED7AA", badge: "#EA580C" }
@@ -329,7 +329,7 @@ const ProgramDashboard = ({ onSelectExperiment }) => {
       </Card>
 
       {/* Two main charts */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <SectionTitle>Decision Breakdown</SectionTitle>
           <ResponsiveContainer width="100%" height={260}>
@@ -458,7 +458,7 @@ const ExperimentGallery = ({ selectedId, onSelect }) => {
   return (
     <div className="space-y-6">
       {/* Selector */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
         {EXPERIMENTS.map(e => (
           <button key={e.id}
             onClick={() => onSelect(e.id)}
@@ -498,7 +498,7 @@ const ExperimentGallery = ({ selectedId, onSelect }) => {
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-4 gap-4">
         <StatCard label="Primary Metric" value={exp.primaryMetric} />
         <StatCard label="Sample Size" value={exp.sampleSize.toLocaleString()} />
         <StatCard label="Surface Lift"
@@ -508,7 +508,7 @@ const ExperimentGallery = ({ selectedId, onSelect }) => {
       </div>
 
       {/* Hypothesis & Finding */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <SectionTitle>Hypothesis</SectionTitle>
           <p className="text-sm text-gray-700 leading-relaxed">{exp.hypothesis}</p>
@@ -607,7 +607,7 @@ const E2Viz = ({ exp }) => (
 
 // E3: Novelty decay
 const E3Viz = ({ exp }) => (
-  <div className="grid grid-cols-2 gap-6">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
     <Card>
       <SectionTitle>Lift Decay Over 4 Weeks</SectionTitle>
       <ResponsiveContainer width="100%" height={280}>
@@ -692,7 +692,7 @@ const E4Viz = ({ exp }) => (
 const E5Viz = ({ exp }) => {
   const p = exp.powerAnalysis;
   return (
-    <div className="grid grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <Card>
         <SectionTitle>Effect Size Mismatch</SectionTitle>
         <ResponsiveContainer width="100%" height={260}>
@@ -744,7 +744,7 @@ const E5Viz = ({ exp }) => {
 
 // E6: CUPED + Bayesian + Holdout
 const E6Viz = ({ exp }) => (
-  <div className="grid grid-cols-3 gap-6">
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
     <Card>
       <SectionTitle>Holdout Validation</SectionTitle>
       <ResponsiveContainer width="100%" height={240}>
@@ -849,14 +849,14 @@ const CookieCatsDeepDive = () => {
       </div>
 
       {/* Sample & SRM */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <StatCard label="Total Players" value={cc.sampleSizes.total.toLocaleString()} />
         <StatCard label="gate_30 (control)" value={cc.sampleSizes.gate_30.toLocaleString()} sub="49.6%" />
         <StatCard label="gate_40 (treatment)" value={cc.sampleSizes.gate_40.toLocaleString()} sub="50.4%" />
       </div>
 
       {/* Retention comparison */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <SectionTitle>1-Day Retention</SectionTitle>
           <div className="text-xs text-gray-500 mb-3">NOT significantly different (p={cc.retention1.pValue})</div>
@@ -996,7 +996,7 @@ const ExperimentDesigner = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Inputs */}
         <Card>
           <SectionTitle>Statistical Parameters</SectionTitle>
@@ -1080,7 +1080,7 @@ const ExperimentDesigner = () => {
       </div>
 
       {/* Outputs */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-4 gap-4">
         <StatCard label="Users per Variant" value={sampleSize.toLocaleString()} color={COLORS.primary} />
         <StatCard label="Total Users Needed" value={totalSample.toLocaleString()} />
         <StatCard label="Estimated Duration"
@@ -1254,7 +1254,7 @@ const ExecutiveBriefing = () => (
     </div>
 
     {/* Key wins */}
-    <div className="grid grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <Card>
         <SectionTitle className="text-green-700">What Shipped</SectionTitle>
         <div className="space-y-3">
@@ -1341,7 +1341,7 @@ const ExecutiveBriefing = () => (
     {/* What's next */}
     <Card>
       <SectionTitle>Q4 Priorities</SectionTitle>
-      <div className="grid grid-cols-3 gap-4 mt-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
         <div className="p-4 bg-gray-50 rounded-lg">
           <div className="text-xs font-bold uppercase tracking-wider text-gray-500">Run</div>
           <div className="text-sm font-medium text-gray-900 mt-2">Re-run E5 (AI Practice) with proper sample size</div>
