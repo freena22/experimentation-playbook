@@ -1241,10 +1241,10 @@ const ExecutiveBriefing = () => (
     </div>
 
     {/* TL;DR */}
-    <div className="rounded-xl p-6 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
-      <div className="text-xs font-bold uppercase tracking-wider opacity-80 mb-2">TL;DR</div>
-      <p className="text-lg leading-relaxed">
-        We ran 6 experiments this quarter. <span className="font-bold">2 shipped. 1 shipped to a specific segment. 2 killed. 1 needs re-running.</span> The 4 that didn't ship are arguably more valuable than the 2 that did — they revealed systematic gaps in how we design and read experiments.
+    <div className="rounded-xl p-6" style={{ backgroundColor: "#1E293B" }}>
+      <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">TL;DR</div>
+      <p className="text-lg leading-relaxed text-slate-200">
+        We ran 6 experiments this quarter. <span className="font-bold text-white">2 shipped. 1 shipped to a specific segment. 2 killed. 1 needs re-running.</span> The 4 that didn't ship are arguably more valuable than the 2 that did — they revealed systematic gaps in how we design and read experiments.
       </p>
     </div>
 
