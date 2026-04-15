@@ -1,4 +1,4 @@
-# 6 A/B Tests, 2 Ships: An Experimentation Program Review
+# 6 A/B Tests, 2 Ships: An Experimentation Playbook
 
 [![CI — Smoke Test](https://github.com/freena22/experimentation-playbook/actions/workflows/ci.yml/badge.svg)](https://github.com/freena22/experimentation-playbook/actions/workflows/ci.yml)
 

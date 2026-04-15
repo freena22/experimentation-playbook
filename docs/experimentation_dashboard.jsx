@@ -1383,9 +1383,9 @@ function App() {
           <div className="flex items-center justify-between">
             <div>
               <div className="text-xs font-bold uppercase tracking-wider text-gray-400">
-                Experimentation Playbook · Q3 2025 Quarterly Review
+                Experimentation Playbook · Q3 2025
               </div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1.5">6 A/B Tests, 2 Ships: An Experimentation Program Review</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1.5">6 A/B Tests, 2 Ships: An Experimentation Playbook</h1>
             </div>
             <div className="text-right">
               <div className="text-xs uppercase tracking-wider text-gray-400">Author</div>
@@ -1424,7 +1424,7 @@ function App() {
       {/* Footer */}
       <div className="border-t border-slate-200 bg-white mt-12">
         <div className="max-w-7xl mx-auto px-6 py-4 text-xs text-gray-400 text-center">
-          Experimentation Playbook · Q3 2025 Quarterly Review · Built by{" "}
+          Experimentation Playbook · Built by{" "}
           <a href="https://www.linkedin.com/in/freena-wang/" target="_blank" rel="noopener noreferrer"
             className="text-blue-500 hover:text-blue-700 underline">Freena Wang</a>
         </div>
