@@ -11,19 +11,20 @@ import { BarChart, Bar, LineChart, Line, ScatterChart, Scatter, XAxis, YAxis, Ca
 // COLORS & STYLE
 // ============================================================================
 const COLORS = {
-  primary: "#1E40AF",
-  positive: "#10B981",
-  negative: "#EF4444",
-  warning: "#F59E0B",
+  primary: "#2563EB",
+  positive: "#059669",
+  negative: "#DC2626",
+  negativeSoft: "#E87171",
+  warning: "#D97706",
   neutral: "#6B7280",
-  control: "#6B7280",
+  control: "#64748B",
   treatment: "#3B82F6",
-  holdout: "#A78BFA",
-  bg: "#F9FAFB",
+  holdout: "#8B5CF6",
+  bg: "#F8FAFC",
   card: "#FFFFFF",
-  text: "#111827",
-  subtext: "#6B7280",
-  border: "#E5E7EB",
+  text: "#0F172A",
+  subtext: "#64748B",
+  border: "#E2E8F0",
 };
 
 // ============================================================================
@@ -222,7 +223,7 @@ const PORTFOLIO = {
 // REUSABLE COMPONENTS
 // ============================================================================
 const Card = ({ children, className = "" }) => (
-  <div className={`bg-white rounded-xl border border-gray-200 p-5 ${className}`}>
+  <div className={`bg-white rounded-xl border border-slate-200 p-5 shadow-sm ${className}`}>
     {children}
   </div>
 );
@@ -290,7 +291,7 @@ const ProgramDashboard = ({ onSelectExperiment }) => {
         <StatCard label="Projected Revenue from Ships" value={PORTFOLIO.programPnL.revenueFromShips}
           sub={PORTFOLIO.programPnL.revenueDetail} color={COLORS.positive} />
         <StatCard label="Revenue Damage Prevented" value={PORTFOLIO.programPnL.damagePrevented}
-          sub={PORTFOLIO.programPnL.damageDetail} color={COLORS.negative} />
+          sub={PORTFOLIO.programPnL.damageDetail} color={COLORS.negativeSoft} />
         <StatCard label="Wrong Decisions Prevented" value="3 of 6"
           sub="50% would have been called incorrectly without deeper analysis" color={COLORS.primary} />
       </div>
@@ -299,23 +300,28 @@ const ProgramDashboard = ({ onSelectExperiment }) => {
       <Card>
         <SectionTitle>Without Rigorous Analysis, Half These Experiments Would Have Been Decided Wrong</SectionTitle>
         <div className="grid grid-cols-3 gap-4 mt-2">
-          {PORTFOLIO.counterFactuals.map(cf => (
-            <div key={cf.id} className="p-4 bg-red-50 rounded-lg border border-red-200">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="font-mono text-xs bg-red-200 text-red-800 px-1.5 py-0.5 rounded">{cf.id}</span>
-                <span className="text-xs font-bold text-red-800">{cf.verb}</span>
+          {PORTFOLIO.counterFactuals.map(cf => {
+            const accent = cf.id === "E2" ? { bg: "bg-amber-50", border: "border-amber-200", badge: "bg-amber-100 text-amber-800", text: "text-amber-900", muted: "text-amber-700", line: "border-amber-200" }
+              : cf.id === "E3" ? { bg: "bg-orange-50", border: "border-orange-200", badge: "bg-orange-100 text-orange-800", text: "text-orange-900", muted: "text-orange-700", line: "border-orange-200" }
+              : { bg: "bg-rose-50", border: "border-rose-200", badge: "bg-rose-100 text-rose-800", text: "text-rose-900", muted: "text-rose-700", line: "border-rose-200" };
+            return (
+              <div key={cf.id} className={`p-4 ${accent.bg} rounded-lg border ${accent.border}`}>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className={`font-mono text-xs ${accent.badge} px-1.5 py-0.5 rounded font-bold`}>{cf.id}</span>
+                  <span className={`text-xs font-bold ${accent.text}`}>{cf.verb}</span>
+                </div>
+                <div className={`text-xs ${accent.muted} space-y-1`}>
+                  <div><span className="font-semibold">Surface read:</span> {cf.surface}</div>
+                  <div><span className="font-semibold">Deeper truth:</span> {cf.reality}</div>
+                  <div className={`font-bold pt-1.5 border-t ${accent.line} mt-1.5 ${accent.text}`}>→ {cf.cost}</div>
+                </div>
               </div>
-              <div className="text-xs text-red-700 space-y-1">
-                <div><span className="font-semibold">Surface read:</span> {cf.surface}</div>
-                <div><span className="font-semibold">Deeper truth:</span> {cf.reality}</div>
-                <div className="font-bold pt-1 border-t border-red-200 mt-1">→ {cf.cost}</div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
-        <div className="mt-4 px-4 py-3 bg-blue-50 rounded-lg border border-blue-100">
-          <p className="text-xs text-blue-900 font-medium leading-relaxed">
-            The value of an experimentation program isn't just the features it ships — it's the <span className="font-bold">bad decisions it prevents</span>. A surface-level read of these experiments would have shipped a novelty-decayed feature, destroyed $697K in retention value, and missed a $216K segment opportunity.
+        <div className="mt-4 px-4 py-3 bg-slate-50 rounded-lg border border-slate-200">
+          <p className="text-xs text-slate-700 font-medium leading-relaxed">
+            The value of an experimentation program isn't just the features it ships — it's the <span className="font-bold text-slate-900">bad decisions it prevents</span>. A surface-level read of these experiments would have shipped a novelty-decayed feature, destroyed $697K in retention value, and missed a $216K segment opportunity.
           </p>
         </div>
       </Card>
@@ -450,17 +456,31 @@ const ExperimentGallery = ({ selectedId, onSelect }) => {
   return (
     <div className="space-y-6">
       {/* Selector */}
-      <div className="flex flex-wrap gap-2">
+      <div className="grid grid-cols-3 gap-3">
         {EXPERIMENTS.map(e => (
           <button key={e.id}
             onClick={() => onSelect(e.id)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+            className={`text-left px-4 py-3 rounded-xl transition-all ${
               e.id === selectedId
-                ? "bg-gray-900 text-white"
-                : "bg-white text-gray-600 border border-gray-200 hover:border-gray-400"
+                ? "bg-gray-900 text-white shadow-lg ring-2 ring-gray-900 ring-offset-2"
+                : "bg-white text-gray-700 border border-gray-200 hover:border-gray-400 hover:shadow-sm"
             }`}>
-            <span className="font-mono mr-2 opacity-70">{e.id}</span>
-            {e.name}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className={`font-mono text-xs font-bold px-1.5 py-0.5 rounded ${
+                  e.id === selectedId ? "bg-white/20 text-white" : "bg-gray-100 text-gray-500"
+                }`}>{e.id}</span>
+                <span className={`text-xs px-1.5 py-0.5 rounded ${
+                  e.id === selectedId ? "bg-white/15 text-gray-300" : "bg-gray-50 text-gray-400"
+                }`}>{e.area}</span>
+              </div>
+              <Pill text={e.decision}
+                color={e.id === selectedId ? "#fff" : e.decisionColor}
+                bgColor={e.id === selectedId ? "rgba(255,255,255,0.15)" : `${e.decisionColor}15`} />
+            </div>
+            <div className={`text-sm font-semibold mt-2 ${e.id === selectedId ? "text-white" : "text-gray-900"}`}>
+              {e.name}
+            </div>
           </button>
         ))}
       </div>
@@ -1354,16 +1374,16 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ backgroundColor: "#F8FAFC" }}>
       {/* Header */}
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-white border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
             <div>
               <div className="text-xs font-bold uppercase tracking-wider text-gray-400">
                 Experimentation Playbook · Q3 2025 Quarterly Review
               </div>
-              <h1 className="text-xl font-bold text-gray-900 mt-1">6 A/B Tests, 2 Ships: An Experimentation Program Review</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1.5">6 A/B Tests, 2 Ships: An Experimentation Program Review</h1>
             </div>
             <div className="text-right">
               <div className="text-xs uppercase tracking-wider text-gray-400">Author</div>
@@ -1400,7 +1420,7 @@ export default function App() {
       </div>
 
       {/* Footer */}
-      <div className="border-t border-gray-200 bg-white mt-12">
+      <div className="border-t border-slate-200 bg-white mt-12">
         <div className="max-w-7xl mx-auto px-6 py-4 text-xs text-gray-400 text-center">
           Experimentation Playbook · Q3 2025 Quarterly Review · Built by{" "}
           <a href="https://www.linkedin.com/in/freena-wang/" target="_blank" rel="noopener noreferrer"
